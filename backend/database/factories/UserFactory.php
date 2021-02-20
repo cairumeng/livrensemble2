@@ -28,8 +28,9 @@ $factory->define(User::class, function (Faker $faker) {
         'https://cdn.learnku.com/uploads/images/201710/14/1/NDnzMutoxX.png',
     ];
     return [
-        'name' => $faker->name,
+        'username' => $faker->name,
         'email' => $faker->unique()->safeEmail,
+        'avatar' => $faker->randomElement($avatars),
         'email_verified_at' => now(),
         'password' => bcrypt(123456),
         'remember_token' => null
