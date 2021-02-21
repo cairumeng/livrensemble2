@@ -6,11 +6,14 @@ import Button from 'react-bootstrap/Button'
 
 import './Login.css'
 import { GET_PROFILE } from '../../redux/actionType'
+import getProfile from '../../redux/actions/profile'
 
-const Login = (props) => {
+const Login = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [remember, setRemember] = useState(false)
   const [errors, setErrors] = useState([])
+
   const dispatch = useDispatch()
 
   const loginHandler = (e) => {
@@ -25,11 +28,7 @@ const Login = (props) => {
         }
         localStorage.setItem('REACT_lIVRENSENSEMBLE_TOKEN', token)
 
-        axios
-          .post('/auth/me')
-          .then((response) =>
-            dispatch({ type: GET_PROFILE, payload: response.data })
-          )
+        dispatch(getProfile())
       })
       .catch((err) => {
         setErrors(err.response.data.errors)
@@ -68,7 +67,12 @@ const Login = (props) => {
         )}
       </Form.Group>
       <Form.Group controlId="formBasicCheckbox">
-        <Form.Check type="checkbox" label="remember me" />
+        <Form.Check
+          type="checkbox"
+          label="remember me"
+          value={remember}
+          onClick={() => setRemember(!remember)}
+        />
       </Form.Group>
       <Button variant="primary" type="submit" block onClick={loginHandler}>
         Submit
