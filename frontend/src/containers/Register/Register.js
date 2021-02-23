@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button'
 import { toast } from 'react-toastify'
 import axios from 'axios'
 import { useHistory } from 'react-router-dom'
+import ReCAPTCHA from 'react-google-recaptcha'
 
 import './Register.css'
 
@@ -11,6 +12,7 @@ const Register = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [passwordConfirmation, setPasswordConfirmation] = useState('')
+  const [recaptcha, setRecaptcha] = useState(false)
   const [errors, setErrors] = useState('')
   const history = useHistory()
 
@@ -85,12 +87,17 @@ const Register = () => {
             </Form.Text>
           )}
         </Form.Group>
+        <ReCAPTCHA
+          sitekey={process.env.GOOGLE_RECAPTCHA_KEY}
+          onChange={() => setRecaptcha(true)}
+        />
 
         <Button
           className="mt-4"
           variant="primary"
           type="submit"
           block
+          disabled={!recaptcha}
           onClick={RegisterHandler}
         >
           Submit
