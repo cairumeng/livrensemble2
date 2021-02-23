@@ -1,54 +1,46 @@
 import React, { useState } from 'react'
-import axios from 'axios'
-import { useDispatch, useSelector } from 'react-redux'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
-import { ToastContainer, toast } from 'react-toastify'
-import './Login.css'
-import getProfile from '../../redux/actions/profile'
+import { toast } from 'react-toastify'
+import axios from 'axios'
 import { useHistory } from 'react-router-dom'
 
-const Login = () => {
+import './Register.css'
+
+const Register = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [remember, setRemember] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
-  const [errors, setErrors] = useState([])
-
-  const dispatch = useDispatch()
+  const [passwordConfirmation, setPasswordConfirmation] = useState('')
+  const [errors, setErrors] = useState('')
   const history = useHistory()
-  const user = useSelector((state) => state.profile.user)
 
-  if (user.id) {
-    history.push('/')
-  }
-
-  const loginHandler = (e) => {
+  const RegisterHandler = (e) => {
     e.preventDefault()
-    setIsLoading(true)
 
     axios
-      .post('/auth/login', { email, password })
-      .then((response) => {
-        const token = `Bearer ${response.data.access_token}`
-        axios.defaults.headers.common = {
-          Authorization: token,
-        }
-        localStorage.setItem('REACT_lIVRENSENSEMBLE_TOKEN', token)
-        history.push('/')
-        dispatch(getProfile())
-        setIsLoading(false)
+      .post('/users', {
+        email,
+        password,
+        password_confirmation: passwordConfirmation,
+      })
+      .then(() => {
+        toast('Sign up success!You can log in now!', {
+          position: 'top-center',
+          type: 'success',
+          autoClose: 3000,
+          closeOnClick: true,
+        })
+        history.push('/login')
       })
       .catch((err) => {
-        setIsLoading(false)
         setErrors(err.response.data.errors)
       })
   }
 
   return (
     <div>
-      <h1 className="mt-5 mb-5 text-center">Login</h1>
-      <Form className="col-md-4 mr-auto ml-auto login-form">
+      <h1 className="mt-5 mb-5 text-center">Register</h1>
+      <Form className="col-md-4 mr-auto ml-auto register-form">
         <Form.Group controlId="formBasicEmail">
           <Form.Label>Email address</Form.Label>
           <Form.Control
@@ -70,7 +62,7 @@ const Login = () => {
           <Form.Label>Password</Form.Label>
           <Form.Control
             type="password"
-            placeholder="Password"
+            placeholder="Enter password"
             onChange={(e) => setPassword(e.target.value)}
             value={password}
           />
@@ -78,21 +70,28 @@ const Login = () => {
             <Form.Text className="text-danger">{errors.password}</Form.Text>
           )}
         </Form.Group>
-        <Form.Group controlId="formBasicCheckbox">
-          <Form.Check
-            type="checkbox"
-            label="remember me"
-            value={remember}
-            onClick={() => setRemember(!remember)}
+
+        <Form.Group controlId="formBasicPassword">
+          <Form.Label>Password confirmation</Form.Label>
+          <Form.Control
+            type="password"
+            placeholder="Confirm password"
+            onChange={(e) => setPasswordConfirmation(e.target.value)}
+            value={passwordConfirmation}
           />
+          {password !== passwordConfirmation && (
+            <Form.Text className="text-danger">
+              Password is not confirmed.
+            </Form.Text>
+          )}
         </Form.Group>
+
         <Button
           className="mt-4"
           variant="primary"
           type="submit"
           block
-          onClick={loginHandler}
-          diasabled={isLoading}
+          onClick={RegisterHandler}
         >
           Submit
         </Button>
@@ -101,4 +100,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default Register

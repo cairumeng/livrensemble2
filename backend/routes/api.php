@@ -26,3 +26,5 @@ Route::group([
     Route::post('refresh', 'AuthController@refresh');
     Route::post('me', 'AuthController@me');
 });
+
+Route::resource('users', 'UsersController')->only(['store']);

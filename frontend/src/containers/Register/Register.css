@@ -1,0 +1,9 @@
+.register-form {
+  position: relative;
+  padding: 1rem;
+  border: 0.2rem solid #ececec;
+  border-radius: 8px;
+  margin-right: 0;
+  margin-left: 0;
+  color: #212529;
+}

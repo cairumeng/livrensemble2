@@ -1,13 +1,21 @@
 .custom-control-label {
-    font-weight: 400;
-  }
-  
-  .forgot-password a {
-    text-align: right;
-    font-size: 13px;
-    padding-top: 10px;
-    color: #167bff;
-    margin: 0;
-  }
-  
- 
+  font-weight: 400;
+}
+
+.forgot-password a {
+  text-align: right;
+  font-size: 13px;
+  padding-top: 10px;
+  color: #167bff;
+  margin: 0;
+}
+
+.login-form {
+  position: relative;
+  padding: 1rem;
+  border: 0.2rem solid #ececec;
+  border-radius: 8px;
+  margin-right: 0;
+  margin-left: 0;
+  color: #212529;
+}

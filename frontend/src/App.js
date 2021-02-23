@@ -1,15 +1,20 @@
 import Login from './containers/Login/Login'
 import Layout from './components/Layout/Layout'
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
-
-import 'bootstrap/dist/css/bootstrap.min.css'
-import './App.css'
+import Index from './containers/Index/Index'
+import Register from './containers/Register/Register'
+import { ToastContainer } from 'react-toastify'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import axios from 'axios'
 import getProfile from './redux/actions/profile'
 import { useDispatch } from 'react-redux'
 
+import 'bootstrap/dist/css/bootstrap.min.css'
+import './App.css'
+import 'react-toastify/dist/ReactToastify.css'
+
 function App(props) {
   const dispatch = useDispatch()
+
   const token = localStorage.getItem('REACT_lIVRENSENSEMBLE_TOKEN')
 
   if (token) {
@@ -19,15 +24,22 @@ function App(props) {
 
   return (
     <div className="App">
-      <Layout>
-        <Router>
+      <Router>
+        <Layout>
           <Switch>
             <Route path="/login">
               <Login />
             </Route>
+            <Route path="/register">
+              <Register />
+            </Route>
+            <Route path="/">
+              <Index />
+            </Route>
           </Switch>
-        </Router>
-      </Layout>
+        </Layout>
+      </Router>
+      <ToastContainer />
     </div>
   )
 }
