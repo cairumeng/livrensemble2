@@ -13,7 +13,7 @@ const Register = () => {
   const [password, setPassword] = useState('')
   const [passwordConfirmation, setPasswordConfirmation] = useState('')
   const [recaptcha, setRecaptcha] = useState(false)
-  const [errors, setErrors] = useState('')
+  const [errors, setErrors] = useState({})
   const history = useHistory()
 
   const RegisterHandler = (e) => {
@@ -42,7 +42,7 @@ const Register = () => {
   return (
     <div>
       <h1 className="mt-5 mb-5 text-center">Register</h1>
-      <Form className="col-md-4 mr-auto ml-auto register-form">
+      <Form className="col-md-4 mr-auto ml-auto auth-form">
         <Form.Group controlId="formBasicEmail">
           <Form.Label>Email address</Form.Label>
           <Form.Control
@@ -88,7 +88,7 @@ const Register = () => {
           )}
         </Form.Group>
         <ReCAPTCHA
-          sitekey={process.env.GOOGLE_RECAPTCHA_KEY}
+          sitekey={process.env.REACT_APP_GOOGLE_RECAPTCHA_KEY}
           onChange={() => setRecaptcha(true)}
         />
 

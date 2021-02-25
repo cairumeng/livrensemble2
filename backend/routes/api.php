@@ -29,3 +29,4 @@ Route::group([
 
 Route::resource('users', 'UsersController')->only(['store', 'update']);
 Route::post('users/{user}/avatar', 'UsersController@uploadAvatar');
+Route::put('users/{user}/password-change', 'UsersController@passwordChange');

@@ -12,6 +12,7 @@ import { useDispatch } from 'react-redux'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './App.css'
 import 'react-toastify/dist/ReactToastify.css'
+import PasswordChange from './containers/Users/PasswordChange'
 
 function App(props) {
   const dispatch = useDispatch()
@@ -28,6 +29,10 @@ function App(props) {
       <Router>
         <Layout>
           <Switch>
+            <Route path="/users/:id/password-change">
+              <PasswordChange />
+            </Route>
+
             <Route path="/users/:id">
               <Show />
             </Route>

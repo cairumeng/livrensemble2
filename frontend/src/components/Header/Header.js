@@ -40,8 +40,11 @@ const Header = (props) => {
               <NavDropdown.Item as={Link} to={`/users/${user.id}`}>
                 Profile Center
               </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">
-                Another action
+              <NavDropdown.Item
+                as={Link}
+                to={`/users/${user.id}/password-change`}
+              >
+                Change Password
               </NavDropdown.Item>
               <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
               <NavDropdown.Divider />

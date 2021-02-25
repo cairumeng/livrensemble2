@@ -10,6 +10,7 @@ import {
   Spinner,
 } from 'react-bootstrap'
 import { useSelector } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
 const Show = () => {
@@ -22,6 +23,7 @@ const Show = () => {
   const [isLoading, setLoading] = useState(false)
   const [errors, setErrors] = useState({})
 
+  const history = useHistory()
   const modifyHandler = (e) => {
     e.preventDefault()
     setModifyMode(true)
@@ -61,6 +63,7 @@ const Show = () => {
             autoClose: 3000,
             closeOnClick: true,
           })
+          setModifyMode(false)
         }
       })
       .catch((errors) => {

@@ -55,4 +55,24 @@ class UsersController extends Controller
             'description' => $request->description
         ]);
     }
+
+    public function passwordChange(User $user, Request $request)
+    {
+        $request->validate([
+            'current_password' => 'required|min:6',
+            'password' => 'required|min:6|confirmed'
+        ]);
+        if (Hash::check($request->current_password, $user->password)) {
+            return $user->update([
+                'password' => Hash::make($request->password)
+            ]);
+        } else {
+            return response()->json([
+                'errors' => [
+                    'current_password' => ['Current password is not correct']
+
+                ]
+            ], 403);
+        };
+    }
 }

@@ -48,13 +48,12 @@ const Login = () => {
   return (
     <div>
       <h1 className="mt-5 mb-5 text-center">Login</h1>
-      <Form className="col-md-4 mr-auto ml-auto login-form">
+      <Form className="col-md-4 mr-auto ml-auto auth-form">
         <Form.Group controlId="formBasicEmail">
           <Form.Label>Email address</Form.Label>
           <Form.Control
             type="email"
             placeholder="Enter email"
-            value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
           {errors.email ? (
@@ -72,7 +71,6 @@ const Login = () => {
             type="password"
             placeholder="Password"
             onChange={(e) => setPassword(e.target.value)}
-            value={password}
           />
           {errors.password && (
             <Form.Text className="text-danger">{errors.password}</Form.Text>

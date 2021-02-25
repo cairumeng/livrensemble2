@@ -33,7 +33,11 @@ class AuthController extends Controller
         $credentials = request(['email', 'password']);
 
         if (!$token = Auth::attempt($credentials)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+            return response()->json([
+                'errors' => [
+                    'email' => 'This email is not match your password'
+                ]
+            ], 401);
         }
 
         return $this->respondWithToken($token, $request->remember);
