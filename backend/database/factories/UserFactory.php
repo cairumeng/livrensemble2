@@ -31,6 +31,7 @@ $factory->define(User::class, function (Faker $faker) {
         'username' => $faker->name,
         'email' => $faker->unique()->safeEmail,
         'avatar' => $faker->randomElement($avatars),
+        'description' => $faker->sentence(),
         'email_verified_at' => now(),
         'password' => bcrypt(123456),
         'remember_token' => null

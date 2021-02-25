@@ -97,7 +97,7 @@ const Register = () => {
           variant="primary"
           type="submit"
           block
-          disabled={!recaptcha}
+          disabled={recaptcha ? 'flase' : 'true'}
           onClick={RegisterHandler}
         >
           Submit

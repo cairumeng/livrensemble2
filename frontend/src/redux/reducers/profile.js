@@ -1,7 +1,13 @@
 import { GET_PROFILE } from '../actionType'
 
 const initialState = {
-  user: {},
+  user: {
+    email: '',
+    id: '',
+    username: '',
+    avatar: '',
+    description: '',
+  },
 }
 
 const profileReducer = (state = initialState, action) => {

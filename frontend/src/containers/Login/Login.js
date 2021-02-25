@@ -54,8 +54,8 @@ const Login = () => {
           <Form.Control
             type="email"
             placeholder="Enter email"
-            onChange={(e) => setEmail(e.target.value)}
             value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
           {errors.email ? (
             <Form.Text className="text-danger">{errors.email}</Form.Text>

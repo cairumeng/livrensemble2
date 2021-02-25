@@ -27,4 +27,5 @@ Route::group([
     Route::post('me', 'AuthController@me');
 });
 
-Route::resource('users', 'UsersController')->only(['store']);
+Route::resource('users', 'UsersController')->only(['store', 'update']);
+Route::post('users/{user}/avatar', 'UsersController@uploadAvatar');

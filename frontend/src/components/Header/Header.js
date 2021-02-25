@@ -37,7 +37,7 @@ const Header = (props) => {
               title={<img src={user.avatar} className="profile-avatar" />}
               id="collasible-nav-dropdown"
             >
-              <NavDropdown.Item href="#action/3.1">
+              <NavDropdown.Item as={Link} to={`/users/${user.id}`}>
                 Profile Center
               </NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2">

@@ -2,6 +2,7 @@ import Login from './containers/Login/Login'
 import Layout from './components/Layout/Layout'
 import Index from './containers/Index/Index'
 import Register from './containers/Register/Register'
+import Show from './containers/Users/Show'
 import { ToastContainer } from 'react-toastify'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import axios from 'axios'
@@ -27,6 +28,9 @@ function App(props) {
       <Router>
         <Layout>
           <Switch>
+            <Route path="/users/:id">
+              <Show />
+            </Route>
             <Route path="/login">
               <Login />
             </Route>
