@@ -10,7 +10,7 @@ class CommandsController extends Controller
     public function index()
     {
 
-        $commands = Command::with('restaurant')->get();
-        return $commands;
+        $commands = Command::with('restaurant', 'city')->orderBy('city_id')->get();
+        return $commands->groupBy('city_id');
     }
 }

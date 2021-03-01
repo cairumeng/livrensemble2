@@ -14,4 +14,9 @@ class Command extends Model
     {
         return $this->belongsTo(Restaurant::class);
     }
+
+    public function city()
+    {
+        return $this->belongsTo(City::class);
+    }
 }

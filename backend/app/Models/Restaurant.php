@@ -20,6 +20,6 @@ class Restaurant extends Model
 
     public function commands()
     {
-        return $this->hasMany(Command::class);
+        return $this->hasMany(Command::class, 'restaurant_id');
     }
 }

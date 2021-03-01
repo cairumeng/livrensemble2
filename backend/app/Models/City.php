@@ -9,4 +9,9 @@ class City extends Model
     protected $fillable = [
         'city', 'postal_code'
     ];
+
+    public function commands()
+    {
+        return $this->hasMany(Command::class, 'city_id');
+    }
 }
