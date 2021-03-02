@@ -12,7 +12,7 @@ class CitiesTableSeeder extends Seeder
      */
     public function run()
     {
-        $cities = factory(App\Models\City::class, 50)->make();
+        $cities = factory(App\Models\City::class, 20)->make();
 
         City::insert($cities->toArray());
     }

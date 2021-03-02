@@ -15,7 +15,7 @@ class CommandsTableSeeder extends Seeder
     {
         $commands = [];
         City::all()->each(function ($city) use (&$commands) {
-            $result = factory(Command::class, 15)->make([
+            $result = factory(Command::class, 5)->make([
                 'city_id' => $city->id
             ])->toArray();
             $commands = array_merge($commands, $result);

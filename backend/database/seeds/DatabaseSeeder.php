@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\SousCommand;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -15,5 +16,8 @@ class DatabaseSeeder extends Seeder
         $this->call(RestaurantsTableSeeder::class);
         $this->call(CitiesTableSeeder::class);
         $this->call(CommandsTableSeeder::class);
+        $this->call(DishesTableSeeder::class);
+        $this->call(SousCommandsTableSeeder::class);
+        $this->call(SousCommandDishesTableSeeder::class);
     }
 }
