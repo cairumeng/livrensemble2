@@ -12,6 +12,6 @@ class City extends Model
 
     public function commands()
     {
-        return $this->hasMany(Command::class, 'city_id');
+        return $this->hasMany(Command::class);
     }
 }

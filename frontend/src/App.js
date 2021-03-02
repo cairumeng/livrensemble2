@@ -10,9 +10,12 @@ import getProfile from './redux/actions/profile'
 import { useDispatch } from 'react-redux'
 
 import 'bootstrap/dist/css/bootstrap.min.css'
+import '@fortawesome/fontawesome-free/css/fontawesome.min.css'
+import '@fortawesome/fontawesome-free/css/solid.min.css'
 import './App.css'
 import 'react-toastify/dist/ReactToastify.css'
 import PasswordChange from './containers/Users/PasswordChange'
+import City from './containers/City/City'
 
 function App(props) {
   const dispatch = useDispatch()
@@ -21,7 +24,9 @@ function App(props) {
 
   if (token) {
     axios.defaults.headers.common.Authorization = token
-    dispatch(getProfile())
+    dispatch(getProfile()).catch((err) => {
+      localStorage.removeItem('REACT_lIVRENSENSEMBLE_TOKEN')
+    })
   }
 
   return (
@@ -29,10 +34,12 @@ function App(props) {
       <Router>
         <Layout>
           <Switch>
+            <Route path="/cities/:id">
+              <City />
+            </Route>
             <Route path="/users/:id/password-change">
               <PasswordChange />
             </Route>
-
             <Route path="/users/:id">
               <Show />
             </Route>

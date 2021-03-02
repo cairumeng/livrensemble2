@@ -1,0 +1,12 @@
+.restaurant-image {
+  height: 160px;
+  width: 234px;
+}
+
+.restaurant-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  height: 48px;
+  overflow: hidden;
+}

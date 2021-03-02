@@ -7,8 +7,8 @@ use Faker\Generator as Faker;
 use Illuminate\Support\Carbon;
 
 $factory->define(Command::class, function (Faker $faker) {
-    $start_time =  $faker->dateTimeBetween('-2 month', 'now');
-    $closed_time = Carbon::parse($start_time)->addDays($faker->numberBetween(1, 30));
+    $start_time =  $faker->dateTimeBetween('-1 month', 'now');
+    $closed_time = Carbon::parse($start_time)->addDays($faker->numberBetween(15, 60));
     $delivery_time = Carbon::parse($closed_time)->addDays($faker->numberBetween(1, 7));
     $current_price = $faker->randomFloat(2, 30, 350);
     $total_price = $faker->numberBetween(100, 600);

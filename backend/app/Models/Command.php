@@ -12,11 +12,11 @@ class Command extends Model
 
     public function restaurant()
     {
-        return $this->belongsTo(Restaurant::class);
+        return $this->belongsTo(Restaurant::class, 'restaurant_id')->select(['id', 'name', 'email', 'phone_number', 'address', 'front_image', 'description']);
     }
 
     public function city()
     {
-        return $this->belongsTo(City::class);
+        return $this->belongsTo(City::class, 'city_id')->select(['id', 'city', 'postal_code']);
     }
 }
