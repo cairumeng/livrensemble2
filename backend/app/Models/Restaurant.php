@@ -14,12 +14,15 @@ class Restaurant extends Model
      *
      * @var array
      */
-    protected $fillable = [
-        'name', 'email', 'phone_number', 'address', 'front_image', 'description'
-    ];
 
-    public function commands()
+
+    public function dishes()
     {
-        return $this->hasMany(Command::class, 'restaurant_id');
+        return $this->hasMany(Dish::class, 'restaurant_id');
+    }
+
+    public function categories()
+    {
+        return $this->hasMany(DishCategory::class, 'restaurant_id');
     }
 }

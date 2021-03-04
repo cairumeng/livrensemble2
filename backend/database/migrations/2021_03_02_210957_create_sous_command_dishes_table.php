@@ -17,6 +17,7 @@ class CreateSousCommandDishesTable extends Migration
             $table->id();
             $table->foreignId('sous_command_id');
             $table->foreignId('dish_id');
+            $table->integer('dish_quantity');
             $table->timestamps();
         });
     }

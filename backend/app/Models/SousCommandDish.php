@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class SousCommandDish extends Model
 {
     protected $fillable = [
-        'sous_command_id', 'dish_id'
+        'sous_command_id', 'dish_id', 'dish_quantity'
     ];
 
     public function sousCommand()
