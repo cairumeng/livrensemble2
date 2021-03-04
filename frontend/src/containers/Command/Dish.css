@@ -1,0 +1,61 @@
+.dish-item {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin: 0;
+  padding: 16px 16px 16px 0;
+  transition: box-shadow 0.2s ease-in-out;
+}
+
+.dish-description {
+  margin-bottom: auto;
+  flex-grow: 1;
+}
+
+.dish-name {
+  color: #2e3333;
+  font-size: 16px;
+  line-height: 22px;
+  display: block;
+  font-family: plex-sans, sans-serif;
+  margin: 0;
+  font-weight: 400;
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+
+.dish-ingredients {
+  padding-top: 8px;
+  color: #828585;
+  font-size: 14px;
+  line-height: 19px;
+  font-family: plex-sans, sans-serif;
+  margin: 0;
+  font-weight: 400;
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+
+.dish-image {
+  position: relative;
+  flex-shrink: 0;
+  width: 96px;
+  height: 96px;
+  margin-top: 0;
+  border-radius: 3px;
+  margin-left: 16px;
+}
+
+.image {
+  background-size: cover;
+  background-position: 50%;
+  opacity: 1;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.add-cart {
+  font-size: 24px;
+  color: dodgerblue;
+}

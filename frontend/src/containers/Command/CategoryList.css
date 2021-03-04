@@ -1,0 +1,28 @@
+.dish-category-bar {
+  display: flex;
+  height: 64px;
+  background-color: #f8f5f2;
+  align-items: center;
+  flex-direction: row;
+  overflow-x: auto;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+}
+
+.dish-category-item {
+  display: flex;
+  justify-content: center;
+  padding: 8px 12px;
+  color: #222;
+  font-size: 14px;
+  border-radius: 16px;
+  margin: 0 8px;
+  cursor: pointer;
+  flex: none;
+}
+
+.dish-category-item.active {
+  background-color: dodgerblue;
+  color: white;
+}

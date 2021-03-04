@@ -3,6 +3,10 @@ import Layout from './components/Layout/Layout'
 import Index from './containers/Index/Index'
 import Register from './containers/Register/Register'
 import Show from './containers/Users/Show'
+import City from './containers/City/City'
+import Command from './containers/Command/Command'
+import PasswordChange from './containers/Users/PasswordChange'
+
 import { ToastContainer } from 'react-toastify'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import axios from 'axios'
@@ -14,8 +18,6 @@ import '@fortawesome/fontawesome-free/css/fontawesome.min.css'
 import '@fortawesome/fontawesome-free/css/solid.min.css'
 import './App.css'
 import 'react-toastify/dist/ReactToastify.css'
-import PasswordChange from './containers/Users/PasswordChange'
-import City from './containers/City/City'
 
 function App(props) {
   const dispatch = useDispatch()
@@ -30,10 +32,13 @@ function App(props) {
   }
 
   return (
-    <div className="App">
+    <div className="app">
       <Router>
         <Layout>
           <Switch>
+            <Route path="/commands/:id">
+              <Command />
+            </Route>
             <Route path="/cities/:id">
               <City />
             </Route>

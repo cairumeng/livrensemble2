@@ -10,3 +10,8 @@
   height: 48px;
   overflow: hidden;
 }
+
+.command-info {
+  font-size: small;
+  margin-top: 4px;
+}
