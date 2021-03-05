@@ -21,3 +21,11 @@ code {
   margin-left: 0;
   color: #212529;
 }
+
+.text-black {
+  color: #222;
+}
+
+.text-black:hover {
+  color: #222;
+}

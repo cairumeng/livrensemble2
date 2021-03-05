@@ -21,5 +21,6 @@ class DatabaseSeeder extends Seeder
         $this->call(DishesTableSeeder::class);
         $this->call(SousCommandsTableSeeder::class);
         $this->call(SousCommandDishesTableSeeder::class);
+        $this->call(PaniersTableSeeder::class);
     }
 }
