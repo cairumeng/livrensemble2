@@ -15,8 +15,8 @@ class CreateSousCommandsTable extends Migration
     {
         Schema::create('sous_commands', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('command_id');
-            $table->foreignId('user_id');
+            $table->foreignId('command_id')->constrained()->onDelete('cascade');;
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->integer('amount');
             $table->string('address');
             $table->text('note');

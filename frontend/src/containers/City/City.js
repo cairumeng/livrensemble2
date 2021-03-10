@@ -14,7 +14,6 @@ const City = () => {
     axios
       .get(`/cities/${params.id}`)
       .then((response) => {
-        console.log(1111, response.data)
         setCityCommands(response.data)
       })
       .catch((err) => console.log(err))

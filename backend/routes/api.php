@@ -32,4 +32,4 @@ Route::post('users/{user}/avatar', 'UsersController@uploadAvatar');
 Route::put('users/{user}/password-change', 'UsersController@passwordChange');
 Route::resource('commands', 'CommandsController')->only(['index', 'store', 'show']);
 Route::resource('cities', 'CitiesController')->only(['index', 'show']);
-Route::resource('cart-items', 'CartItemsController')->only(['index']);
+Route::resource('cart-items', 'CartItemsController')->only(['index', 'store']);

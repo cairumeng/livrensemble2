@@ -4,7 +4,7 @@ import Category from './Category'
 import AnchorLink from 'react-anchor-link-smooth-scroll'
 import './CategoryList.css'
 
-const CategoryList = ({ categories }) => {
+const CategoryList = ({ categories, addToCartHandler }) => {
   const [activeCategoryId, setActiveCategoryId] = useState(
     categories.length > 0 ? categories[0].id : 0
   )
@@ -22,13 +22,18 @@ const CategoryList = ({ categories }) => {
             }}
             href={`#category-${category.id}`}
             offset={82}
+            key={category.id}
           >
             {category.name}
           </AnchorLink>
         ))}
       </div>
       {categories.map((category) => (
-        <Category category={category} key={category.id} />
+        <Category
+          category={category}
+          key={category.id}
+          addToCartHandler={addToCartHandler}
+        />
       ))}
     </div>
   )

@@ -46,7 +46,7 @@ const CommandCard = ({ command }) => {
               size="sm"
               onClick={showCommandHandler}
             >
-              <i class="fas fa-utensils"></i>
+              <i className="fas fa-utensils"></i>
             </Button>
           </div>
         </Card.Body>

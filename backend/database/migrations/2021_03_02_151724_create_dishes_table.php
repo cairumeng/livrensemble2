@@ -15,13 +15,13 @@ class CreateDishesTable extends Migration
     {
         Schema::create('dishes', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('restaurant_id');
+            $table->foreignId('restaurant_id')->constrained()->onDelete('cascade');;
             $table->string('name');
             $table->integer('price');
             $table->text('ingredients');
             $table->integer('spicy_level');
             $table->string('image');
-            $table->foreignId('category_id');
+            $table->foreignId('category_id')->constrained()->onDelete('cascade');;
             $table->timestamps();
         });
     }
