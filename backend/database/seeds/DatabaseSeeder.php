@@ -1,7 +1,5 @@
 <?php
 
-use App\Models\DishCategory;
-use App\Models\SousCommand;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -21,6 +19,6 @@ class DatabaseSeeder extends Seeder
         $this->call(DishesTableSeeder::class);
         $this->call(SousCommandsTableSeeder::class);
         $this->call(SousCommandDishesTableSeeder::class);
-        $this->call(PaniersTableSeeder::class);
+        $this->call(CartItemsTableSeeder::class);
     }
 }

@@ -1,11 +1,11 @@
 <?php
 
+use App\Models\CartItem;
 use App\Models\Command;
 use App\Models\User;
-use App\Models\Panier;
 use Illuminate\Database\Seeder;
 
-class PaniersTableSeeder extends Seeder
+class CartItemsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,14 +14,14 @@ class PaniersTableSeeder extends Seeder
      */
     public function run(Faker\Generator $faker)
     {
-        $panierItems = [];
+        $cartItems = [];
         $commands = Command::with('restaurant.dishes')->get();
-        User::all()->each(function ($user) use (&$panierItems, &$commands, $faker) {
+        User::all()->each(function ($user) use (&$cartItems, &$commands, $faker) {
             $command = $faker->randomElement($commands);
             $dishes = $faker->randomElements($command->restaurant->dishes, $faker->numberBetween(1, $command->restaurant->dishes->count()));
 
             foreach ($dishes as $dish) {
-                $panierItems[] = factory(Panier::class)->make([
+                $cartItems[] = factory(CartItem::class)->make([
                     'command_id' => $command->id,
                     'dish_id' => $dish->id,
                     'user_id' => $user->id
@@ -29,6 +29,6 @@ class PaniersTableSeeder extends Seeder
             }
         });
 
-        Panier::insert($panierItems);
+        CartItem::insert($cartItems);
     }
 }
