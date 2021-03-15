@@ -18,7 +18,13 @@ const AddressList = () => {
 
   const changeDefaultAddressHandler = (id) => {
     setDefaultAddressId(id)
-    axios.put('/addresses')
+    axios
+      .post(`/addresses/change-default-address`, { address_id: id })
+      .then((response) => {
+        if (response.data == 1) {
+          return <Checkout addressId={id} />
+        }
+      })
   }
 
   return (
@@ -55,7 +61,12 @@ const AddressList = () => {
           </Col>
           <Col md={4}>
             <div className="address-buttons">
-              <Button className="mr-2">choose</Button>
+              <Button
+                className="mr-2"
+                onClick={() => changeDefaultAddressHandler(address.id)}
+              >
+                choose
+              </Button>
               <Button className="mr-2">modify</Button>
               <Button className="mr-2">delete</Button>
             </div>
