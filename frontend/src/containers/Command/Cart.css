@@ -113,3 +113,14 @@
   margin-left: 3px;
   color: #0056b3;
 }
+
+.cart-note {
+  display: flex;
+  justify-content: center;
+}
+.cart-note textarea {
+  border-color: #666;
+  border-radius: 0.375em;
+  width: 250px;
+  margin-bottom: 16px;
+}

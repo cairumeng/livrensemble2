@@ -29,3 +29,7 @@ code {
 .text-black:hover {
   color: #222;
 }
+
+i.fas {
+  color: #007bff;
+}

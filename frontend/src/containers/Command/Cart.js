@@ -1,6 +1,19 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { Button } from 'react-bootstrap'
 import './Cart.css'
-const Cart = ({ cartPresence, cartItems }) => {
+const Cart = ({
+  cartPresence,
+  cartItems,
+  addToCartHandler,
+  cartItemDeleteHandler,
+  addSousCommand,
+}) => {
+  const [note, setNote] = useState('')
+  const amount = Object.values(cartItems).reduce(
+    (accumulator, cartItem) =>
+      accumulator + cartItem.dish_quantity * cartItem.dish.price,
+    0
+  )
   return (
     <div className="cart">
       <div className="cart-header">
@@ -16,16 +29,23 @@ const Cart = ({ cartPresence, cartItems }) => {
                 </span>
                 <span className="cart-dish-name">{cartItem.dish.name}</span>
                 <div>
-                  <button className="cart-quantity-delete">-</button>
-                  <button className="cart-quantity-add">+</button>
-                  <button className="cart-dish-note">
-                    <i className="fas fa-pencil-alt"></i>
+                  <button
+                    className="cart-quantity-delete"
+                    onClick={() => addToCartHandler(cartItem.dish, -1)}
+                  >
+                    -
+                  </button>
+                  <button
+                    className="cart-quantity-add"
+                    onClick={() => addToCartHandler(cartItem.dish, 1)}
+                  >
+                    +
                   </button>
                 </div>
                 <span className="cart-dish-price">{cartItem.dish.price}€</span>
                 <button
                   className="cart-dish-delete"
-                  //   onClick={(e) => cartItemDeleteHandler(e, cartItem.id)}
+                  onClick={() => cartItemDeleteHandler(cartItem.id)}
                 >
                   <i className="fas fa-trash-alt"></i>
                 </button>
@@ -44,15 +64,25 @@ const Cart = ({ cartPresence, cartItems }) => {
       <div className="cart-sum">
         <div className="cart-sum-row">
           <b>Total</b>
-          <span>
-            {Object.values(cartItems).reduce(
-              (accumulator, cartItem) =>
-                accumulator + cartItem.dish_quantity * cartItem.dish.price,
-              0
-            )}
-            €
-          </span>
+          <span>{amount}€</span>
         </div>
+      </div>
+      <div className="cart-note">
+        <textarea
+          className="textarea"
+          rows="4"
+          placeholder="Please leave your note here! e.g. Please add more piment"
+          onChange={(e) => setNote(e.target.value)}
+        ></textarea>
+      </div>
+      <div className="d-flex justify-content-center mb-3 pl-2 pr-2">
+        <Button
+          size="lg"
+          block
+          onClick={(e) => addSousCommand(e, note, amount)}
+        >
+          Command
+        </Button>
       </div>
     </div>
   )

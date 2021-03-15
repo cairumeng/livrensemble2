@@ -6,7 +6,7 @@ import Show from './containers/Users/Show'
 import City from './containers/City/City'
 import Command from './containers/Command/Command'
 import PasswordChange from './containers/Users/PasswordChange'
-
+import AddressList from './containers/Address/AddressList'
 import { ToastContainer } from 'react-toastify'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import axios from 'axios'
@@ -36,6 +36,9 @@ function App(props) {
       <Router>
         <Layout>
           <Switch>
+            <Route path="/addresses">
+              <AddressList />
+            </Route>
             <Route path="/commands/:id">
               <Command />
             </Route>

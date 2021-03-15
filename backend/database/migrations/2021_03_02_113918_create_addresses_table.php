@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSousCommandsTable extends Migration
+class CreateAddressesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,14 @@ class CreateSousCommandsTable extends Migration
      */
     public function up()
     {
-        Schema::create('sous_commands', function (Blueprint $table) {
+        Schema::create('addresses', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('command_id')->constrained()->onDelete('cascade');;
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->integer('amount');
-            $table->foreignId('address_id')->nullable();
-            $table->text('note');
+            $table->string('name');
+            $table->string('address');
+            $table->foreignId('city_id');
+            $table->string('phone_number');
+            $table->boolean('is_default');
             $table->timestamps();
         });
     }
@@ -31,6 +32,6 @@ class CreateSousCommandsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sous_commands');
+        Schema::dropIfExists('addresses');
     }
 }

@@ -18,9 +18,10 @@ const Command = () => {
     axios.get(`/commands/${params.id}`).then((response) => {
       setCommand(response.data)
     })
+    loadCartItems()
   }, [])
 
-  useEffect(() => {
+  const loadCartItems = () => {
     axios
       .get('/cart-items')
       .then((response) => {
@@ -32,23 +33,26 @@ const Command = () => {
       .catch((err) => {
         console.log(err)
       })
-  }, [
-    cartItems.length,
-    cartItems.reduce(
-      (totalQuantity, cartItem) => totalQuantity + cartItem.dish_quantity,
-      0
-    ),
-  ])
+  }
+
+  const addToCartHandler = (dish, quantity) => {
+    axios
+      .post('/cart-items', {
+        command_id: params.id,
+        dish_id: dish.id,
+        quantity,
+      })
+      .then((response) => loadCartItems())
+  }
+
+  const cartItemDeleteHandler = (id) => {
+    axios.delete(`/cart-items/${id}`).then((response) => loadCartItems())
+  }
+
+  const addSousCommand = (e, note) => {}
 
   if (!command) {
     return <Loader />
-  }
-
-  const addToCartHandler = (e, dish) => {
-    e.preventDefault()
-    axios
-      .post('/cart-items', { command_id: params.id, dish_id: dish.id })
-      .then((response) => console.log(response.data))
   }
 
   return (
@@ -124,7 +128,13 @@ const Command = () => {
           />
         </div>
       </Container>
-      <Cart cartPresence={cartPresence} cartItems={cartItems} />
+      <Cart
+        cartPresence={cartPresence}
+        cartItems={cartItems}
+        addToCartHandler={addToCartHandler}
+        cartItemDeleteHandler={cartItemDeleteHandler}
+        addSousCommand={addSousCommand}
+      />
     </div>
   )
 }

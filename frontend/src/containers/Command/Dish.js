@@ -1,6 +1,8 @@
 import React from 'react'
 
 import './Dish.css'
+
+const DEFAULT_QUANTITY = 1
 const Dish = ({ dish, addToCartHandler }) => {
   return (
     <li className="dish-item" key={dish.id}>
@@ -20,7 +22,7 @@ const Dish = ({ dish, addToCartHandler }) => {
 
       <button
         className="add-cart btn btn-link"
-        onClick={(e) => addToCartHandler(e, dish)}
+        onClick={() => addToCartHandler(dish, DEFAULT_QUANTITY)}
       >
         <i className="fas fa-cart-plus"></i>
       </button>

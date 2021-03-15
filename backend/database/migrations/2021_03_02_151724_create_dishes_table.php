@@ -21,7 +21,10 @@ class CreateDishesTable extends Migration
             $table->text('ingredients');
             $table->integer('spicy_level');
             $table->string('image');
-            $table->foreignId('category_id')->constrained()->onDelete('cascade');;
+
+            $table->unsignedBigInteger('category_id');
+            $table->foreign('category_id')->references('id')->on('dish_categories');
+
             $table->timestamps();
         });
     }

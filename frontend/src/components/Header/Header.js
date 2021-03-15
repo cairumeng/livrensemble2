@@ -46,7 +46,9 @@ const Header = (props) => {
               >
                 Change Password
               </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to={'/addresses'}>
+                manage addresses
+              </NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item href="#" onClick={() => logout()}>
                 Logout

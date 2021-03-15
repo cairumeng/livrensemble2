@@ -1,0 +1,20 @@
+.address-box {
+  border: 1px solid white;
+  padding: 16px;
+}
+
+.address-box:hover {
+  border: 1px solid #666;
+  padding: 16px;
+}
+
+.address-buttons {
+  padding: 16px;
+}
+
+.address-select {
+  position: absolute;
+  float: right;
+  right: 15px;
+  top: 18px;
+}
