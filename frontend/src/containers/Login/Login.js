@@ -3,7 +3,6 @@ import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
-import { ToastContainer, toast } from 'react-toastify'
 import './Login.css'
 import getProfile from '../../redux/actions/profile'
 import { useHistory } from 'react-router-dom'
@@ -28,7 +27,7 @@ const Login = () => {
     setIsLoading(true)
 
     axios
-      .post('/auth/login', { email, password })
+      .post('/auth/login', { email, password, remember })
       .then((response) => {
         const token = `Bearer ${response.data.access_token}`
         axios.defaults.headers.common = {

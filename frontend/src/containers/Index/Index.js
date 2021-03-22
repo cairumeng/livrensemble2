@@ -30,6 +30,7 @@ const Index = () => {
       <Select
         value={selectedCity}
         onChange={selectCityHandler}
+        placeholder="Select your city here!"
         options={cities.map((city) => ({
           value: city.id,
           label: `${city.city} - ${city.postal_code}`,
