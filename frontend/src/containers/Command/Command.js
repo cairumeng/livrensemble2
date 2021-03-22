@@ -25,7 +25,7 @@ const Command = () => {
     axios
       .get('/cart-items')
       .then((response) => {
-        if (response.data.length) {
+        if (response.data.length > 0) {
           setCartPresence(true)
           setCartItems(response.data)
         }
@@ -42,14 +42,14 @@ const Command = () => {
         dish_id: dish.id,
         quantity,
       })
-      .then((response) => loadCartItems())
+      .then((response) => {
+        loadCartItems()
+      })
   }
 
   const cartItemDeleteHandler = (id) => {
     axios.delete(`/cart-items/${id}`).then((response) => loadCartItems())
   }
-
-  const addSousCommand = (e, note) => {}
 
   if (!command) {
     return <Loader />
@@ -133,7 +133,6 @@ const Command = () => {
         cartItems={cartItems}
         addToCartHandler={addToCartHandler}
         cartItemDeleteHandler={cartItemDeleteHandler}
-        addSousCommand={addSousCommand}
       />
     </div>
   )
