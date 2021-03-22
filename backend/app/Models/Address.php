@@ -18,4 +18,9 @@ class Address extends Model
     {
         return $this->belongsTo(City::class, 'city_id');
     }
+
+    public function fullAddress()
+    {
+        return $this->address . ', ' . $this->city->postal_code . ', ' . $this->city->city;
+    }
 }

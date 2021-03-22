@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { Container, Button, Col, Row } from 'react-bootstrap'
+import { Link, useHistory } from 'react-router-dom'
+import Loader from '../../components/Loader/Loader'
 import axios from 'axios'
 import './AddressList.css'
 const AddressList = () => {
-  const [addresses, setAddresses] = useState([])
+  const [addresses, setAddresses] = useState(null)
   const [defaultAddressId, setDefaultAddressId] = useState(0)
+  const history = useHistory()
   useEffect(() => {
     axios.get('/addresses').then((response) => {
       setAddresses(response.data)
@@ -19,27 +22,46 @@ const AddressList = () => {
   const changeDefaultAddressHandler = (id) => {
     setDefaultAddressId(id)
     axios
-      .post(`/addresses/change-default-address`, { address_id: id })
+      .post('/addresses/change-default-address', { address_id: id })
+      .then((response) => {
+        history.push('/checkout')
+      })
+  }
+
+  const deleteAddressHandler = (id) => {
+    axios
+      .delete(`/addresses/${id}`)
       .then((response) => {
         if (response.data == 1) {
-          return <Checkout addressId={id} />
+          setAddresses(addresses.filter((address) => address.id !== id))
         }
       })
+      .catch((err) => console.log(err))
+  }
+
+  if (!addresses) {
+    return <Loader />
   }
 
   return (
     <Container className="mt-5">
       <h3>Choose your delivery address</h3>
-      <Button variant="primary" size="lg" className="mb-3">
+      <Button
+        variant="primary"
+        size="lg"
+        className="mb-3"
+        as={Link}
+        to="/address-form"
+      >
         Add a new address
       </Button>
       {addresses.map((address) => (
-        <Row
-          className="d-flex justify-content-between mb-3 "
-          key={address.id}
-          onClick={() => changeDefaultAddressHandler(address.id)}
-        >
-          <Col md={8} className="address-box">
+        <Row className="d-flex justify-content-between mb-3 " key={address.id}>
+          <Col
+            md={8}
+            className="address-box"
+            onClick={() => changeDefaultAddressHandler(address.id)}
+          >
             <div>
               <i className="fas fa-map-marker-alt mr-2"></i>
               <span>
@@ -67,8 +89,19 @@ const AddressList = () => {
               >
                 choose
               </Button>
-              <Button className="mr-2">modify</Button>
-              <Button className="mr-2">delete</Button>
+              <Button
+                className="mr-2"
+                as={Link}
+                to={`/address-form/${address.id}`}
+              >
+                modify
+              </Button>
+              <Button
+                className="mr-2"
+                onClick={() => deleteAddressHandler(address.id)}
+              >
+                delete
+              </Button>
             </div>
           </Col>
         </Row>

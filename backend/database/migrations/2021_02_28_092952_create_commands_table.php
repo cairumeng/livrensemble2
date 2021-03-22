@@ -22,6 +22,8 @@ class CreateCommandsTable extends Migration
             $table->timestamp('start_time');
             $table->timestamp('closed_time');
             $table->timestamp('delivery_time');
+            $table->integer('delivery_option');
+            $table->string('address')->nullable();
             $table->boolean('is_valid');
             $table->timestamps();
         });

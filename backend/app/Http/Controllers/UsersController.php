@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Command;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
@@ -74,5 +76,18 @@ class UsersController extends Controller
                 ]
             ], 403);
         };
+    }
+
+    public function deliveryInfo()
+    {
+        if (!Auth::user()->currentCommand()) {
+            return response()->json([
+                'errors' => [
+                    'cartItems' => ['There is no items in your cart!']
+                ]
+            ], 422);
+        }
+        $deliveryInfo = Auth::user()->deliveryInfo();
+        return response()->json($deliveryInfo);
     }
 }

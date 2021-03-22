@@ -12,6 +12,10 @@ class SousCommandDish extends Model
         'sous_command_id', 'dish_id', 'dish_quantity'
     ];
 
+    protected $casts = [
+        'dish_quantity' => 'integer',
+    ];
+
     public function sousCommand()
     {
         return $this->belongsTo(SousCommand::class);

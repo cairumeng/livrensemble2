@@ -19,7 +19,7 @@ class CreateSousCommandsTable extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->integer('amount');
             $table->foreignId('address_id')->nullable();
-            $table->text('note');
+            $table->text('note')->nullable();
             $table->timestamps();
         });
     }

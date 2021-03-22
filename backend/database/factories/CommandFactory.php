@@ -12,6 +12,9 @@ $factory->define(Command::class, function (Faker $faker) {
     $delivery_time = Carbon::parse($closed_time)->addDays($faker->numberBetween(1, 7));
     $current_price = $faker->randomFloat(2, 30, 350);
     $total_price = $faker->numberBetween(100, 600);
+    $delivery_option = $faker->numberBetween(0, 1);
+    $addressess = ['Gare Antony', 'Gare Robinson', 'Gare Lhay-les-roses', 'Gare villejuif', 'Gare AAA'];
+
     return [
         'restaurant_id' => $faker->numberBetween(1, 50),
         'city_id' => $faker->numberBetween(1, 50),
@@ -20,6 +23,7 @@ $factory->define(Command::class, function (Faker $faker) {
         'start_time' => $start_time,
         'closed_time' => $closed_time,
         'delivery_time' => $delivery_time,
+        'address' => $delivery_option == 0 ? $faker->randomElement($addressess) : null,
         'is_valid' => $current_price >= $total_price
     ];
 });

@@ -62,6 +62,49 @@ class User extends Authenticatable implements JWTSubject
 
     public function cartItems()
     {
-        $this->hasMany(CartItem::class, 'user_id');
+        return $this->hasMany(CartItem::class);
+    }
+
+    public function addresses()
+    {
+        return $this->hasMany(Address::class);
+    }
+
+    public function defaultAddress()
+    {
+        return $this->addresses()->where('is_default', 1)->with('city')->first();
+    }
+
+    public function currentCommand()
+    {
+        $firstCartItem = $this->cartItems()->first();
+        $commandId = $firstCartItem ? $firstCartItem->command_id : null;
+        return Command::find($commandId);
+    }
+
+    public function deliveryInfo()
+    {
+        $command = $this->currentCommand();
+        $defaultAddress = $this->defaultAddress();
+
+        $address =  $command->address;
+        $address_id = null;
+
+        if ($command->delivery_option === 1) {
+            $address = $defaultAddress->fullAddress();
+            $address_id = $defaultAddress->id;
+        }
+
+        return [
+            'name' => $defaultAddress->name,
+            'phone_number' => $defaultAddress->phone_number,
+            'address' => $address,
+            'address_id' => $address_id,
+        ];
+    }
+
+    public function sousCommands()
+    {
+        return $this->hasMany(SousCommand::class);
     }
 }

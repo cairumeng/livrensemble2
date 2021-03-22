@@ -8,25 +8,30 @@ import Loader from '../../components/Loader/Loader'
 
 const City = () => {
   const params = useParams()
-  const [cityCommands, setCityCommands] = useState({})
+  const [cityCommands, setCityCommands] = useState(null)
+  const [city, setCity] = useState(null)
 
   useEffect(() => {
     axios
-      .get(`/cities/${params.id}`)
+      .get(`/commands?cityId=${params.id}`)
       .then((response) => {
-        setCityCommands(response.data)
+        setCityCommands(response.data.cityCommands)
+        setCity(response.data.city)
       })
       .catch((err) => console.log(err))
   }, [])
 
-  if (!cityCommands.id) {
+  if (!cityCommands || !city) {
     return <Loader />
+  }
+  if (cityCommands.length === 0) {
+    return <div>There is no command right in this city!</div>
   }
   return (
     <Container>
-      <h1>{cityCommands.city}</h1>
+      <h1>{city.city}</h1>
       <Row>
-        {cityCommands.commands.map((command) => (
+        {cityCommands.map((command) => (
           <CommandCard command={command} key={command.id} />
         ))}
       </Row>

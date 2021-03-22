@@ -1,19 +1,21 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Button } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
 import './Cart.css'
 const Cart = ({
   cartPresence,
   cartItems,
   addToCartHandler,
   cartItemDeleteHandler,
-  addSousCommand,
 }) => {
-  const [note, setNote] = useState('')
-  const amount = Object.values(cartItems).reduce(
-    (accumulator, cartItem) =>
-      accumulator + cartItem.dish_quantity * cartItem.dish.price,
-    0
-  )
+  const amount =
+    cartItems.length > 0
+      ? cartItems.reduce(
+          (accumulator, cartItem) =>
+            accumulator + cartItem.dish_quantity * cartItem.dish.price,
+          0
+        )
+      : 0
   return (
     <div className="cart">
       <div className="cart-header">
@@ -42,7 +44,9 @@ const Cart = ({
                     +
                   </button>
                 </div>
-                <span className="cart-dish-price">{cartItem.dish.price}€</span>
+                <span className="cart-dish-price">
+                  {cartItem.dish.price * cartItem.dish_quantity}€
+                </span>
                 <button
                   className="cart-dish-delete"
                   onClick={() => cartItemDeleteHandler(cartItem.id)}
@@ -67,20 +71,9 @@ const Cart = ({
           <span>{amount}€</span>
         </div>
       </div>
-      <div className="cart-note">
-        <textarea
-          className="textarea"
-          rows="4"
-          placeholder="Please leave your note here! e.g. Please add more piment"
-          onChange={(e) => setNote(e.target.value)}
-        ></textarea>
-      </div>
+
       <div className="d-flex justify-content-center mb-3 pl-2 pr-2">
-        <Button
-          size="lg"
-          block
-          onClick={(e) => addSousCommand(e, note, amount)}
-        >
+        <Button size="lg" block as={Link} to={`/checkout`}>
           Command
         </Button>
       </div>

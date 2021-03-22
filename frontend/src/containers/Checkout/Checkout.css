@@ -1,0 +1,12 @@
+.change-address-link{
+    font-size: small;
+
+
+}
+
+.cart-note textarea {
+    border-color: #666;
+    border-radius: 0.375em;
+    margin-bottom: 16px;
+    width:800px;
+  }

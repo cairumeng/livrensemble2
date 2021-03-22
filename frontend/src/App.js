@@ -7,10 +7,14 @@ import City from './containers/City/City'
 import Command from './containers/Command/Command'
 import PasswordChange from './containers/Users/PasswordChange'
 import AddressList from './containers/Address/AddressList'
+import Checkout from './containers/Checkout/Checkout'
+import AddressForm from './containers/Address/AddressForm'
+
 import { ToastContainer } from 'react-toastify'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import axios from 'axios'
 import getProfile from './redux/actions/profile'
+
 import { useDispatch } from 'react-redux'
 
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -18,6 +22,9 @@ import '@fortawesome/fontawesome-free/css/fontawesome.min.css'
 import '@fortawesome/fontawesome-free/css/solid.min.css'
 import './App.css'
 import 'react-toastify/dist/ReactToastify.css'
+import CommandSuccess from './containers/CommandSuccess/CommandSuccess'
+import MyCommands from './containers/MyCommands/MyCommands'
+import MyCommand from './containers/MyCommands/MyCommand'
 
 function App(props) {
   const dispatch = useDispatch()
@@ -36,6 +43,24 @@ function App(props) {
       <Router>
         <Layout>
           <Switch>
+            <Route path="/my-commands/:id">
+              <MyCommand />
+            </Route>
+            <Route path="/my-commands">
+              <MyCommands />
+            </Route>
+            <Route path="/command-success/:id">
+              <CommandSuccess />
+            </Route>
+            <Route path="/address-form/:id">
+              <AddressForm />
+            </Route>
+            <Route path="/address-form">
+              <AddressForm />
+            </Route>
+            <Route path="/checkout">
+              <Checkout />
+            </Route>
             <Route path="/addresses">
               <AddressList />
             </Route>
