@@ -16,14 +16,6 @@ const Login = () => {
 
   const dispatch = useDispatch()
   const history = useHistory()
-  const user = useSelector((state) => state.profile.user)
-
-  if (user.role === 'client') {
-    history.push('/')
-  }
-  if (user.role === 'restaurant') {
-    history.push('/dashboard')
-  }
 
   const loginHandler = (e) => {
     e.preventDefault()
@@ -37,13 +29,18 @@ const Login = () => {
           Authorization: token,
         }
         localStorage.setItem('REACT_lIVRENSENSEMBLE_TOKEN', token)
-        dispatch(getProfile())
+        dispatch(getProfile()).then((profile) => {
+          if (profile.payload.role == 'restaurant') {
+            history.push('/dashboard')
+          } else {
+            history.push('/')
+          }
+        })
         setIsLoading(false)
       })
       .catch((err) => {
         setIsLoading(false)
         setErrors(err.response.data.errors)
-        console.log(err.response.data)
       })
   }
 

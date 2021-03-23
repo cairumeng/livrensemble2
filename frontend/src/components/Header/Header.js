@@ -16,6 +16,7 @@ const Header = (props) => {
   return (
     <Navbar bg="light" expand="lg">
       <Navbar.Brand href="/">Livrensemble</Navbar.Brand>
+
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
@@ -56,10 +57,19 @@ const Header = (props) => {
             <Nav.Link as={Link} to={`/register?role=${role}`}>
               Register
             </Nav.Link>
-            <NavDropdown title="Particular" id="basic-nav-dropdown">
-              <NavDropdown.Item onClick={() => setRole('restaurant')}>
-                Restaurant
-              </NavDropdown.Item>
+            <NavDropdown
+              title={role === 'restaurant' ? 'Restaurant' : 'Particular'}
+              id="basic-nav-dropdown"
+            >
+              {role === 'restaurant' ? (
+                <NavDropdown.Item onClick={() => setRole('client')}>
+                  Particular
+                </NavDropdown.Item>
+              ) : (
+                <NavDropdown.Item onClick={() => setRole('restaurant')}>
+                  Restaurant
+                </NavDropdown.Item>
+              )}
             </NavDropdown>
           </Nav>
         )}

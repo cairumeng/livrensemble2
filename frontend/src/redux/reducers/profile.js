@@ -6,6 +6,7 @@ const initialState = {
     id: '',
     username: '',
     avatar: '',
+    role: '',
   },
   isAuthenticated: false,
 }

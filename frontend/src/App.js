@@ -32,6 +32,8 @@ import MyCommands from './containers/MyCommands/MyCommands'
 import MyCommand from './containers/MyCommands/MyCommand'
 import { useEffect, useState } from 'react'
 import Loader from './components/Loader/Loader'
+import Dashbord from './containers/Dashbord/Dashbord'
+import DashbordLayout from './components/DashbordLayout/DashbordLayout'
 
 const ProtectedRoute = ({
   component: Component,
@@ -85,8 +87,18 @@ const App = () => {
   return (
     <div className="app">
       <Router>
-        <Layout>
-          <Switch>
+        <Switch>
+          <DashbordLayout>
+            <ProtectedRoute
+              path="/dashboard"
+              exact
+              component={Dashbord}
+              checkCondition={
+                profile.isAuthenticated && profile.user.role === 'restaurant'
+              }
+            />
+          </DashbordLayout>
+          <Layout>
             <ProtectedRoute
               path="/my-commands/:id"
               exact
@@ -158,8 +170,8 @@ const App = () => {
             <Route path="/commands/:id" exact component={Command} />
             <Route path="/cities/:id" exact component={City} />
             <Route path="*" component={Index} />
-          </Switch>
-        </Layout>
+          </Layout>
+        </Switch>
       </Router>
       <ToastContainer />
     </div>
