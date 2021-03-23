@@ -11,7 +11,7 @@ const CommandCard = ({ command }) => {
   }
   return (
     <div className="col-md-3 mb-3">
-      <Card>
+      <Card onClick={showCommandHandler} className="cursor-pointer">
         <Card.Img
           variant="top"
           src={command.restaurant.front_image}
@@ -26,13 +26,13 @@ const CommandCard = ({ command }) => {
           </Card.Text>
           <div className="mt-1">
             <Card.Text className="command-info">
-              Delivery Price : <strong> {command.total_price}</strong>
+              Delivery Price : <strong> {command.total_price} €</strong>
             </Card.Text>
             <Card.Text className="command-info">
-              Current Price : <strong> {command.current_price}</strong>
+              Current Price : <strong> {command.current_price} €</strong>
             </Card.Text>
             <Card.Text className="command-info">
-              Delivery Time :
+              Delivery Time :&nbsp;
               <strong>
                 {moment(command.delivery_time).format(
                   'MMMM Do YYYY, h:mm:ss a'
@@ -41,11 +41,7 @@ const CommandCard = ({ command }) => {
             </Card.Text>
           </div>
           <div className="d-flex flex-row-reverse mt-2">
-            <Button
-              variant="outline-primary"
-              size="sm"
-              onClick={showCommandHandler}
-            >
+            <Button variant="outline-primary" size="sm">
               <i className="fas fa-utensils"></i>
             </Button>
           </div>
