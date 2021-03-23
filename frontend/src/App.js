@@ -32,8 +32,7 @@ import MyCommands from './containers/MyCommands/MyCommands'
 import MyCommand from './containers/MyCommands/MyCommand'
 import { useEffect, useState } from 'react'
 import Loader from './components/Loader/Loader'
-import Dashbord from './containers/Dashbord/Dashbord'
-import DashbordLayout from './components/DashbordLayout/DashbordLayout'
+import Dashboard from './containers/Dashboard/Dashboard'
 
 const ProtectedRoute = ({
   component: Component,
@@ -88,65 +87,77 @@ const App = () => {
     <div className="app">
       <Router>
         <Switch>
-          <DashbordLayout>
+          <Layout>
             <ProtectedRoute
               path="/dashboard"
               exact
-              component={Dashbord}
+              component={Dashboard}
               checkCondition={
                 profile.isAuthenticated && profile.user.role === 'restaurant'
               }
             />
-          </DashbordLayout>
-          <Layout>
             <ProtectedRoute
               path="/my-commands/:id"
               exact
               component={MyCommand}
-              checkCondition={profile.isAuthenticated}
+              checkCondition={
+                profile.isAuthenticated && profile.user.role === 'client'
+              }
             />
             <ProtectedRoute
               path="/my-commands"
               exact
               component={MyCommands}
-              checkCondition={profile.isAuthenticated}
+              checkCondition={
+                profile.isAuthenticated && profile.user.role === 'client'
+              }
             />
             <ProtectedRoute
               path="/command-success/:id"
               exact
               component={CommandSuccess}
-              checkCondition={profile.isAuthenticated}
+              checkCondition={
+                profile.isAuthenticated && profile.user.role === 'client'
+              }
             />
             <ProtectedRoute
               path="/address-form/:id"
               exact
               component={AddressForm}
-              checkCondition={profile.isAuthenticated}
+              checkCondition={
+                profile.isAuthenticated && profile.user.role === 'client'
+              }
             />
             <ProtectedRoute
               path="/address-form"
               exact
               component={AddressForm}
-              checkCondition={profile.isAuthenticated}
+              checkCondition={
+                profile.isAuthenticated && profile.user.role === 'client'
+              }
             />
             <ProtectedRoute
               path="/checkout"
               exact
               component={Checkout}
-              checkCondition={profile.isAuthenticated}
+              checkCondition={
+                profile.isAuthenticated && profile.user.role === 'client'
+              }
             />
             <ProtectedRoute
               path="/addresses"
-              exact
               component={AddressList}
-              checkCondition={profile.isAuthenticated}
+              checkCondition={
+                profile.isAuthenticated && profile.user.role === 'client'
+              }
             />
-
             <ProtectedRoute
               path="/users/:id/password-change"
               exact
               component={PasswordChange}
-              checkCondition={profile.isAuthenticated}
+              checkCondition={
+                profile.isAuthenticated && profile.user.role === 'client'
+              }
             />
             <ProtectedRoute
               path="/users/:id"
@@ -158,7 +169,7 @@ const App = () => {
               path="/login"
               component={Login}
               checkCondition={!profile.isAuthenticated}
-              redirectUrl="/"
+              redirectUrl="/dashboard"
             />
             <ProtectedRoute
               path="/register"
@@ -169,7 +180,7 @@ const App = () => {
 
             <Route path="/commands/:id" exact component={Command} />
             <Route path="/cities/:id" exact component={City} />
-            <Route path="*" component={Index} />
+            <Route path="/" exact component={Index} />
           </Layout>
         </Switch>
       </Router>

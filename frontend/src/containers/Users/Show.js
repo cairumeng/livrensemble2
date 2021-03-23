@@ -74,7 +74,7 @@ const Show = () => {
   return (
     <Container className="col-md-8 mr-auto ml-auto mt-5">
       <Row>
-        <Col xs={6} md={4}>
+        <Col md={4}>
           <Form>
             <Image id="current_avatar" src={avatar} thumbnail />
             {isModifyMode && (
@@ -98,10 +98,15 @@ const Show = () => {
             {isLoading && <div id="upload_message"></div>}
           </Form>
         </Col>
-        <Col xs={6} md={4}>
+        <Col md={8}>
           <Form>
             <Form.Group>
-              <Form.Label>Username</Form.Label>
+              {user.role === 'restaurant' ? (
+                <Form.Label>Restaurant name</Form.Label>
+              ) : (
+                <Form.Label>Username</Form.Label>
+              )}
+
               <Form.Control
                 type="text"
                 value={username}
@@ -115,9 +120,14 @@ const Show = () => {
               <Form.Control type="email" value={email} readOnly />
             </Form.Group>
             <Form.Group>
-              <Form.Label>Description</Form.Label>
+              {user.role === 'restaurant' ? (
+                <Form.Label>Restaurant introduction</Form.Label>
+              ) : (
+                <Form.Label>Description</Form.Label>
+              )}
               <Form.Control
-                type="text"
+                as="textarea"
+                row={5}
                 value={description}
                 readOnly={!isModifyMode}
                 onChange={(e) => setDescription(e.target.value)}
@@ -126,19 +136,27 @@ const Show = () => {
                 {errors.description}
               </Form.Text>
             </Form.Group>
-            {isModifyMode ? (
-              <Button variant="primary" type="button" onClick={validateHandler}>
-                Update
-              </Button>
-            ) : (
-              <Button
-                variant="primary"
-                type="button"
-                onClick={() => setModifyMode(true)}
-              >
-                Modify
-              </Button>
-            )}
+            <div className="d-flex">
+              {isModifyMode ? (
+                <Button
+                  className="ml-auto"
+                  variant="primary"
+                  type="button"
+                  onClick={validateHandler}
+                >
+                  Update
+                </Button>
+              ) : (
+                <Button
+                  className="ml-auto"
+                  variant="primary"
+                  type="button"
+                  onClick={() => setModifyMode(true)}
+                >
+                  Modify
+                </Button>
+              )}
+            </div>
           </Form>
         </Col>
       </Row>

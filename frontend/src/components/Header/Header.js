@@ -1,18 +1,11 @@
-import axios from 'axios'
 import React, { useState } from 'react'
 import { Navbar, Nav, NavDropdown } from 'react-bootstrap'
-import { useSelector } from 'react-redux'
 import './Header.css'
 import { Link } from 'react-router-dom'
 
-const Header = (props) => {
-  const user = useSelector((state) => state.profile.user)
+const Header = ({ user, logout }) => {
   const [role, setRole] = useState('client')
-  const logout = () => {
-    axios.post('/auth/logout')
-    localStorage.removeItem('REACT_lIVRENSENSEMBLE_TOKEN')
-    window.location.href = '/'
-  }
+
   return (
     <Navbar bg="light" expand="lg">
       <Navbar.Brand href="/">Livrensemble</Navbar.Brand>
