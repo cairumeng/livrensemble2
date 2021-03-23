@@ -1,5 +1,5 @@
 import axios from 'axios'
-import React from 'react'
+import React, { useState } from 'react'
 import { Navbar, Nav, NavDropdown } from 'react-bootstrap'
 import { useSelector } from 'react-redux'
 import './Header.css'
@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom'
 
 const Header = (props) => {
   const user = useSelector((state) => state.profile.user)
+  const [role, setRole] = useState('client')
   const logout = () => {
     axios.post('/auth/logout')
     localStorage.removeItem('REACT_lIVRENSENSEMBLE_TOKEN')
@@ -52,9 +53,14 @@ const Header = (props) => {
             <Nav.Link as={Link} to="/login">
               Login
             </Nav.Link>
-            <Nav.Link as={Link} to="/register">
+            <Nav.Link as={Link} to={`/register?role=${role}`}>
               Register
             </Nav.Link>
+            <NavDropdown title="Particular" id="basic-nav-dropdown">
+              <NavDropdown.Item onClick={() => setRole('restaurant')}>
+                Restaurant
+              </NavDropdown.Item>
+            </NavDropdown>
           </Nav>
         )}
       </Navbar.Collapse>

@@ -24,12 +24,16 @@ code {
 
 .text-black {
   color: #222;
-}
 
-.text-black:hover {
-  color: #222;
+  &:hover {
+    color: #222;
+  }
 }
 
 i.fas {
   color: #007bff;
+}
+
+.cursor-pointer {
+  cursor: pointer;
 }

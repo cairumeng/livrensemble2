@@ -29,7 +29,7 @@ const City = () => {
   }
   return (
     <Container>
-      <h1>{city.city}</h1>
+      <h1 className="m-5 text-center">{city.city}</h1>
       <Row>
         {cityCommands.map((command) => (
           <CommandCard command={command} key={command.id} />

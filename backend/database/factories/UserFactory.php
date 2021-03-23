@@ -4,7 +4,6 @@
 
 use App\Models\User;
 use Faker\Generator as Faker;
-use Illuminate\Support\Str;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,8 +26,10 @@ $factory->define(User::class, function (Faker $faker) {
         'https://cdn.learnku.com/uploads/images/201710/14/1/ZqM7iaP4CR.png',
         'https://cdn.learnku.com/uploads/images/201710/14/1/NDnzMutoxX.png',
     ];
+    $roles = ['client', 'restaurant'];
     return [
         'username' => $faker->name,
+        'role' => $faker->randomElement($roles),
         'email' => $faker->unique()->safeEmail,
         'avatar' => $faker->randomElement($avatars),
         'description' => $faker->sentence(),

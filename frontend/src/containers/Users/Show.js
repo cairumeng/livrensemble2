@@ -10,7 +10,6 @@ import {
   Spinner,
 } from 'react-bootstrap'
 import { useSelector } from 'react-redux'
-import { useHistory } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
 const Show = () => {
@@ -22,12 +21,6 @@ const Show = () => {
   const [isModifyMode, setModifyMode] = useState(false)
   const [isLoading, setLoading] = useState(false)
   const [errors, setErrors] = useState({})
-
-  const history = useHistory()
-  const modifyHandler = (e) => {
-    e.preventDefault()
-    setModifyMode(true)
-  }
 
   const avatarUploader = (e) => {
     setLoading(true)
@@ -138,7 +131,11 @@ const Show = () => {
                 Update
               </Button>
             ) : (
-              <Button variant="primary" type="button" onClick={modifyHandler}>
+              <Button
+                variant="primary"
+                type="button"
+                onClick={() => setModifyMode(true)}
+              >
                 Modify
               </Button>
             )}

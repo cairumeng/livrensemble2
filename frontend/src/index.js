@@ -1,13 +1,13 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import './index.css'
+import './index.scss'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
 import store from './redux/store/createStore'
 import { Provider } from 'react-redux'
 import axios from 'axios'
 
-axios.defaults.baseURL = 'http://localhost:8000/api/'
+axios.defaults.baseURL = process.env.REACT_APP_HOST_URL
 
 ReactDOM.render(
   <React.StrictMode>

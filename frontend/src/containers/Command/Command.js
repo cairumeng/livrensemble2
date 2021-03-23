@@ -56,10 +56,10 @@ const Command = () => {
   }
 
   return (
-    <div className="d-flex ">
+    <div className="d-flex">
       <Container>
         <div className="d-flex justify-content-between">
-          <div className="d-flex restaurant-header align-items-center">
+          <div className="d-flex restaurant-header align-items-center mt-3">
             <img src={command.restaurant.front_image} />
 
             <div className="ml-3">

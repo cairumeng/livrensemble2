@@ -3,7 +3,7 @@ import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import { toast } from 'react-toastify'
 import axios from 'axios'
-import { useHistory } from 'react-router-dom'
+import { useHistory, useLocation } from 'react-router-dom'
 import ReCAPTCHA from 'react-google-recaptcha'
 
 import './Register.css'
@@ -15,6 +15,10 @@ const Register = () => {
   const [recaptcha, setRecaptcha] = useState(false)
   const [errors, setErrors] = useState({})
   const history = useHistory()
+  const search = useLocation().search
+  const role = new URLSearchParams(search).get('role')
+
+  console.log(role)
 
   const RegisterHandler = (e) => {
     e.preventDefault()
@@ -24,6 +28,7 @@ const Register = () => {
         email,
         password,
         password_confirmation: passwordConfirmation,
+        role,
       })
       .then(() => {
         toast('Sign up success!You can log in now!', {
@@ -39,6 +44,7 @@ const Register = () => {
       })
   }
 
+  console.log(recaptcha)
   return (
     <div>
       <h1 className="mt-5 mb-5 text-center">Register</h1>
@@ -97,7 +103,7 @@ const Register = () => {
           variant="primary"
           type="submit"
           block
-          disabled={recaptcha ? 'flase' : 'true'}
+          disabled={!recaptcha}
           onClick={RegisterHandler}
         >
           Submit

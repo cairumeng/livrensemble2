@@ -11,11 +11,16 @@ import Checkout from './containers/Checkout/Checkout'
 import AddressForm from './containers/Address/AddressForm'
 
 import { ToastContainer } from 'react-toastify'
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from 'react-router-dom'
 import axios from 'axios'
 import getProfile from './redux/actions/profile'
 
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 import '@fortawesome/fontawesome-free/css/fontawesome.min.css'
@@ -25,66 +30,134 @@ import 'react-toastify/dist/ReactToastify.css'
 import CommandSuccess from './containers/CommandSuccess/CommandSuccess'
 import MyCommands from './containers/MyCommands/MyCommands'
 import MyCommand from './containers/MyCommands/MyCommand'
+import { useEffect, useState } from 'react'
+import Loader from './components/Loader/Loader'
 
-function App(props) {
+const ProtectedRoute = ({
+  component: Component,
+  checkCondition,
+  redirectUrl = '/login',
+  ...otherProps
+}) => (
+  <Route
+    {...otherProps}
+    render={(props) => {
+      if (checkCondition) {
+        return <Component {...props} />
+      }
+      return (
+        <Redirect
+          to={{
+            pathname: redirectUrl,
+            state: {
+              from: props.location,
+            },
+          }}
+        />
+      )
+    }}
+  />
+)
+
+const App = () => {
+  const profile = useSelector((state) => state.profile)
   const dispatch = useDispatch()
+  const [loading, setLoading] = useState(false)
 
-  const token = localStorage.getItem('REACT_lIVRENSENSEMBLE_TOKEN')
+  useEffect(() => {
+    const token = localStorage.getItem('REACT_lIVRENSENSEMBLE_TOKEN')
 
-  if (token) {
-    axios.defaults.headers.common.Authorization = token
-    dispatch(getProfile()).catch((err) => {
-      localStorage.removeItem('REACT_lIVRENSENSEMBLE_TOKEN')
-    })
-  }
+    if (token) {
+      setLoading(true)
+      axios.defaults.headers.common.Authorization = token
+      dispatch(getProfile())
+        .catch((err) => {
+          localStorage.removeItem('REACT_lIVRENSENSEMBLE_TOKEN')
+        })
+        .finally(() => {
+          setLoading(false)
+        })
+    }
+  }, [])
+
+  if (loading) return <Loader />
 
   return (
     <div className="app">
       <Router>
         <Layout>
           <Switch>
-            <Route path="/my-commands/:id">
-              <MyCommand />
-            </Route>
-            <Route path="/my-commands">
-              <MyCommands />
-            </Route>
-            <Route path="/command-success/:id">
-              <CommandSuccess />
-            </Route>
-            <Route path="/address-form/:id">
-              <AddressForm />
-            </Route>
-            <Route path="/address-form">
-              <AddressForm />
-            </Route>
-            <Route path="/checkout">
-              <Checkout />
-            </Route>
-            <Route path="/addresses">
-              <AddressList />
-            </Route>
-            <Route path="/commands/:id">
-              <Command />
-            </Route>
-            <Route path="/cities/:id">
-              <City />
-            </Route>
-            <Route path="/users/:id/password-change">
-              <PasswordChange />
-            </Route>
-            <Route path="/users/:id">
-              <Show />
-            </Route>
-            <Route path="/login">
-              <Login />
-            </Route>
-            <Route path="/register">
-              <Register />
-            </Route>
-            <Route path="/">
-              <Index />
-            </Route>
+            <ProtectedRoute
+              path="/my-commands/:id"
+              exact
+              component={MyCommand}
+              checkCondition={profile.isAuthenticated}
+            />
+            <ProtectedRoute
+              path="/my-commands"
+              exact
+              component={MyCommands}
+              checkCondition={profile.isAuthenticated}
+            />
+            <ProtectedRoute
+              path="/command-success/:id"
+              exact
+              component={CommandSuccess}
+              checkCondition={profile.isAuthenticated}
+            />
+            <ProtectedRoute
+              path="/address-form/:id"
+              exact
+              component={AddressForm}
+              checkCondition={profile.isAuthenticated}
+            />
+            <ProtectedRoute
+              path="/address-form"
+              exact
+              component={AddressForm}
+              checkCondition={profile.isAuthenticated}
+            />
+            <ProtectedRoute
+              path="/checkout"
+              exact
+              component={Checkout}
+              checkCondition={profile.isAuthenticated}
+            />
+            <ProtectedRoute
+              path="/addresses"
+              exact
+              component={AddressList}
+              checkCondition={profile.isAuthenticated}
+            />
+
+            <ProtectedRoute
+              path="/users/:id/password-change"
+              exact
+              component={PasswordChange}
+              checkCondition={profile.isAuthenticated}
+            />
+            <ProtectedRoute
+              path="/users/:id"
+              exact
+              component={Show}
+              checkCondition={profile.isAuthenticated}
+            />
+            <ProtectedRoute
+              path="/login"
+              component={Login}
+              checkCondition={!profile.isAuthenticated}
+              redirectUrl="/"
+            />
+            <ProtectedRoute
+              path="/register"
+              component={Register}
+              checkCondition={!profile.isAuthenticated}
+              redirectUrl="/"
+            />
+
+            <Route path="/commands/:id" exact component={Command} />
+            <Route path="/cities/:id" exact component={City} />
+            <Route path="*" component={Index} />
           </Switch>
         </Layout>
       </Router>

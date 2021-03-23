@@ -3,7 +3,6 @@ import { Container, Button, Jumbotron } from 'react-bootstrap'
 import { Link, useParams } from 'react-router-dom'
 const CommandSuccess = () => {
   const params = useParams()
-  console.log(params)
   return (
     <Container className="mt-5">
       <div className="col-md-8 ml-auto mr-auto">

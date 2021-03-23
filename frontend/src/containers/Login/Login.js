@@ -12,14 +12,17 @@ const Login = () => {
   const [password, setPassword] = useState('')
   const [remember, setRemember] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
-  const [errors, setErrors] = useState([])
+  const [errors, setErrors] = useState({})
 
   const dispatch = useDispatch()
   const history = useHistory()
   const user = useSelector((state) => state.profile.user)
 
-  if (user.id) {
+  if (user.role === 'client') {
     history.push('/')
+  }
+  if (user.role === 'restaurant') {
+    history.push('/dashboard')
   }
 
   const loginHandler = (e) => {
@@ -34,13 +37,13 @@ const Login = () => {
           Authorization: token,
         }
         localStorage.setItem('REACT_lIVRENSENSEMBLE_TOKEN', token)
-        history.push('/')
         dispatch(getProfile())
         setIsLoading(false)
       })
       .catch((err) => {
         setIsLoading(false)
         setErrors(err.response.data.errors)
+        console.log(err.response.data)
       })
   }
 

@@ -6,14 +6,15 @@ const initialState = {
     id: '',
     username: '',
     avatar: '',
-    description: '',
   },
+  isAuthenticated: false,
 }
 
 const profileReducer = (state = initialState, action) => {
   if (action.type === GET_PROFILE) {
     return {
       user: action.payload,
+      isAuthenticated: true,
     }
   }
   return initialState
