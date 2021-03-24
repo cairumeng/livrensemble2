@@ -33,6 +33,7 @@ import MyCommand from './containers/MyCommands/MyCommand'
 import { useEffect, useState } from 'react'
 import Loader from './components/Loader/Loader'
 import Dashboard from './containers/Dashboard/Dashboard'
+import Restaurant from './containers/Restaurant/Restaurant'
 
 const ProtectedRoute = ({
   component: Component,
@@ -72,10 +73,9 @@ const App = () => {
       setLoading(true)
       axios.defaults.headers.common.Authorization = token
       dispatch(getProfile())
+        .then(() => setLoading(false))
         .catch((err) => {
           localStorage.removeItem('REACT_lIVRENSENSEMBLE_TOKEN')
-        })
-        .finally(() => {
           setLoading(false)
         })
     }
@@ -92,6 +92,14 @@ const App = () => {
               path="/dashboard"
               exact
               component={Dashboard}
+              checkCondition={
+                profile.isAuthenticated && profile.user.role === 'restaurant'
+              }
+            />
+            <ProtectedRoute
+              path="/dashboard/restaurant"
+              exact
+              component={Restaurant}
               checkCondition={
                 profile.isAuthenticated && profile.user.role === 'restaurant'
               }
@@ -146,6 +154,7 @@ const App = () => {
             />
             <ProtectedRoute
               path="/addresses"
+              exact
               component={AddressList}
               checkCondition={
                 profile.isAuthenticated && profile.user.role === 'client'
@@ -167,12 +176,16 @@ const App = () => {
             />
             <ProtectedRoute
               path="/login"
+              exact
               component={Login}
               checkCondition={!profile.isAuthenticated}
-              redirectUrl="/dashboard"
+              redirectUrl={
+                profile.user.role === 'restaurant' ? '/dashboard' : '/'
+              }
             />
             <ProtectedRoute
               path="/register"
+              exact
               component={Register}
               checkCondition={!profile.isAuthenticated}
               redirectUrl="/"

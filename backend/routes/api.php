@@ -39,3 +39,4 @@ Route::get('addresses/delivery-address', 'AddressesController@deliveryAddress');
 Route::post('addresses/change-default-address', 'AddressesController@changeDefaultAddress');
 
 Route::resource('addresses', 'AddressesController')->only(['index', 'store', 'update', 'destroy', 'show']);
+Route::resource('/restaurant', 'RestaurantController')->only(['index']);

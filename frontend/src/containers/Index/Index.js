@@ -1,16 +1,13 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { Button } from 'react-bootstrap'
-import { useHistory, useRouteMatch } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import Select from 'react-select'
 import './Index.css'
 const Index = () => {
   const [cities, setCities] = useState([])
   const [selectedCity, setSelectedCity] = useState(null)
   const history = useHistory()
-  const match = useRouteMatch()
-
-  console.log(match)
   useEffect(() => {
     axios
       .get('/cities')
