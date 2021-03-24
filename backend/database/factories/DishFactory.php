@@ -26,12 +26,10 @@ $factory->define(Dish::class, function (Faker $faker) {
 
     ];
     return [
-        'restaurant_id' => $faker->numberBetween(1, 50),
         'name' => $faker->name,
         'price' => $faker->numberBetween(5, 50),
         'ingredients' => $faker->sentence(),
         'spicy_level' => $faker->numberBetween(0, 5),
         'image' => $faker->randomElement($images),
-        'category_id' => $faker->numberBetween(1, 350)
     ];
 });

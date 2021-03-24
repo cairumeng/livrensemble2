@@ -15,7 +15,9 @@ class Restaurant extends Model
      * @var array
      */
 
-
+    protected $fillable = [
+        '$name', 'email', 'phone_number', 'address', 'front_image', 'user_id'
+    ];
     public function dishes()
     {
         return $this->hasMany(Dish::class, 'restaurant_id');

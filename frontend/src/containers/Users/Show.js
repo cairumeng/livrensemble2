@@ -101,11 +101,7 @@ const Show = () => {
         <Col md={8}>
           <Form>
             <Form.Group>
-              {user.role === 'restaurant' ? (
-                <Form.Label>Restaurant name</Form.Label>
-              ) : (
-                <Form.Label>Username</Form.Label>
-              )}
+              <Form.Label>Username</Form.Label>
 
               <Form.Control
                 type="text"
@@ -120,11 +116,7 @@ const Show = () => {
               <Form.Control type="email" value={email} readOnly />
             </Form.Group>
             <Form.Group>
-              {user.role === 'restaurant' ? (
-                <Form.Label>Restaurant introduction</Form.Label>
-              ) : (
-                <Form.Label>Description</Form.Label>
-              )}
+              <Form.Label>Description</Form.Label>
               <Form.Control
                 as="textarea"
                 row={5}

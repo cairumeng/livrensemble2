@@ -28,12 +28,13 @@ $factory->define(Restaurant::class, function (Faker $faker) {
         'https://www.paris-friendly.fr/images/bons_plans_paris/364/sormani-restaurant-paris.jpg'
 
     ];
+
     return [
         'name' => $faker->name,
         'email' => $faker->unique()->safeEmail,
         'phone_number' => $faker->phoneNumber,
         'address' => $faker->address,
         'front_image' => $faker->randomElement($images),
-        'description' => $faker->sentence()
+        'description' => $faker->sentence(),
     ];
 });

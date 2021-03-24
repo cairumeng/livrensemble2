@@ -11,7 +11,6 @@ const Layout = (props) => {
     localStorage.removeItem('REACT_lIVRENSENSEMBLE_TOKEN')
     window.location.href = '/'
   }
-  console.log(1111, user)
 
   return (
     <div>

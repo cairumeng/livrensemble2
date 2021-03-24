@@ -16,7 +16,7 @@ class CartItemsTableSeeder extends Seeder
     {
         $cartItems = [];
         $commands = Command::with('restaurant.dishes')->get();
-        User::all()->each(function ($user) use (&$cartItems, &$commands, $faker) {
+        User::where('role', 'client')->each(function ($user) use (&$cartItems, &$commands, $faker) {
             $command = $faker->randomElement($commands);
             $dishes = $faker->randomElements($command->restaurant->dishes, $faker->numberBetween(1, $command->restaurant->dishes->count()));
 

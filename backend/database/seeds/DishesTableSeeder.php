@@ -2,9 +2,7 @@
 
 use App\Models\Dish;
 use App\Models\DishCategory;
-use App\Models\Restaurant;
 use Illuminate\Database\Seeder;
-use SebastianBergmann\Environment\Console;
 
 class DishesTableSeeder extends Seeder
 {
@@ -18,7 +16,8 @@ class DishesTableSeeder extends Seeder
         $dishes = [];
         DishCategory::all()->each(function ($dishCategory) use (&$dishes) {
             $result = factory(Dish::class, 8)->make([
-                'category_id' => $dishCategory->id
+                'category_id' => $dishCategory->id,
+                'restaurant_id' => $dishCategory->restaurant_id
             ])->toArray();
             $dishes = array_merge($dishes, $result);
         });

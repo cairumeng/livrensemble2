@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use App\Models\Restaurant;
 use Illuminate\Database\Seeder;
 
@@ -12,8 +13,15 @@ class RestaurantsTableSeeder extends Seeder
      */
     public function run()
     {
-        $restaurants = factory(App\Models\Restaurant::class, 50)->create()->make();
 
-        Restaurant::insert($restaurants->toArray());
+        $restaurants = [];
+        $userIds = User::where('role', 'restaurant')->get();
+        $userIds->each(function ($userId) use (&$restaurants) {
+            $restaurants[] = factory(Restaurant::class)->make([
+                'user_id' => $userId
+            ])->toArray();
+        });
+
+        Restaurant::insert($restaurants);
     }
 }

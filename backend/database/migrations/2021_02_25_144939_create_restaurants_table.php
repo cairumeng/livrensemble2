@@ -17,6 +17,7 @@ class CreateRestaurantsTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
+            $table->integer('user_id')->unique();
             $table->string('phone_number');
             $table->string('address')->nullable();
             $table->string('front_image')->nullable();

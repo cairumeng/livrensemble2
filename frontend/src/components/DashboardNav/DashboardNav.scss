@@ -1,0 +1,56 @@
+.sidebar-menu{
+    background-color: whitesmoke;
+    width: 250px;
+    height:100vh;
+    display: flex;
+    justify-content: center;
+    position: fixed;
+    top:0;
+    left: -100%;
+    transition: 850ms;
+    &.active{
+        left: 0;
+        transition: 350ms;
+    }
+}
+
+ul{
+    width: 100%;
+}
+
+.sidebar-toggle{
+    display: flex;
+    width: 100%;
+    justify-content: start;
+    align-items: center;
+}
+
+.sidebar-text{
+    margin-top: 32px;
+    margin-left:0px;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    a:hover{
+        text-decoration: none;
+    }
+   span{
+       padding-left: 8px;
+       font-weight: 450;
+   }
+   .react-icons{
+       size:2rem;
+       margin-right:5px;
+       left:250px;
+   }
+}
+
+.nav-brand{
+    margin-left:20px;
+    transition: 1050ms;
+}
+
+.nav-brand-float{
+    margin-left:250px;
+    transition: 550ms;
+}
+
+
