@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Command;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -25,6 +24,7 @@ class UsersController extends Controller
 
         return User::create([
             'username' => '',
+            'role' => $request->role,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'avatar' => env('APP_URL') . '/images/avatars/default_avatar.png'

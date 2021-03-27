@@ -19,7 +19,7 @@ const Login = () => {
 
   const loginHandler = (e) => {
     e.preventDefault()
-    // setIsLoading(true)
+    setIsLoading(true)
 
     axios
       .post('/auth/login', { email, password, remember })
@@ -31,20 +31,17 @@ const Login = () => {
         localStorage.setItem('REACT_lIVRENSENSEMBLE_TOKEN', token)
         dispatch(getProfile())
           .then((profile) => {
-            console.log(1111, profile)
             if (profile.payload.role === 'restaurant') {
               history.push('/dashboard')
             } else {
               history.push('/')
             }
           })
-          .catch((err) => {
-            console.log(11111, err)
-          })
-        // setIsLoading(false)
+          .catch((err) => {})
+        setIsLoading(false)
       })
       .catch((err) => {
-        // setIsLoading(false)
+        setIsLoading(false)
         setErrors(err.response.data.errors)
       })
   }
@@ -94,7 +91,7 @@ const Login = () => {
           type="submit"
           block
           onClick={loginHandler}
-          diasabled={isLoading}
+          disabled={isLoading}
         >
           Submit
         </Button>

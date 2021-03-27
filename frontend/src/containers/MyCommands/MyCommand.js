@@ -17,7 +17,6 @@ const MyCommand = () => {
   if (!sousCommand) {
     return <Loader />
   }
-  console.log(sousCommand)
   return (
     <div className="col-md-8 mr-auto ml-auto">
       <Table striped bordered hover size="sm" variant="light" className="mt-5">

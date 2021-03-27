@@ -14,10 +14,10 @@ import { toast } from 'react-toastify'
 
 const Show = () => {
   const user = useSelector((state) => state.profile.user)
-  const [username, setUsername] = useState(user.username)
-  const [description, setDescription] = useState(user.description)
-  const [email, setEmail] = useState(user.email)
-  const [avatar, setAvatar] = useState(user.avatar)
+  const [username, setUsername] = useState('')
+  const [description, setDescription] = useState('')
+  const [email, setEmail] = useState('')
+  const [avatar, setAvatar] = useState('')
   const [isModifyMode, setModifyMode] = useState(false)
   const [isLoading, setLoading] = useState(false)
   const [errors, setErrors] = useState({})

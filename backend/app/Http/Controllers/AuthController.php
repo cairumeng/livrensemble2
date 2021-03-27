@@ -32,6 +32,7 @@ class AuthController extends Controller
 
         $credentials = request(['email', 'password']);
 
+        $this->setExpiredDuration();
         if (!$token = Auth::attempt($credentials)) {
             return response()->json([
                 'errors' => [
@@ -40,7 +41,7 @@ class AuthController extends Controller
             ], 401);
         }
 
-        return $this->respondWithToken($token, $request->remember);
+        return $this->respondWithToken($token);
     }
 
     /**
@@ -75,6 +76,17 @@ class AuthController extends Controller
         return $this->respondWithToken(Auth::refresh());
     }
 
+    private function setExpiredDuration()
+    {
+        $remember = request('remember');
+
+        $duration = 60 * 60 * 24;
+        if ($remember) {
+            $duration *= 30;
+        }
+        Auth::factory()->setTTL($duration);
+    }
+
     /**
      * Get the token array structure.
      *
@@ -82,12 +94,12 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    protected function respondWithToken($token, $remember)
+    protected function respondWithToken($token)
     {
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => Auth::factory()->getTTL() * ($remember ? 60 * 24 * 30 : 60 * 24)
+            'expires_in' => Auth::factory()->getTTL(),
         ]);
     }
 }

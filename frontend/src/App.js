@@ -34,6 +34,9 @@ import { useEffect, useState } from 'react'
 import Loader from './components/Loader/Loader'
 import Dashboard from './containers/Dashboard/Dashboard'
 import Restaurant from './containers/Restaurant/Restaurant'
+import RestaurantCreate from './containers/Restaurant/RestaurantCreate'
+import Menu from './containers/Menu/Menu'
+import Category from './containers/Category/Category'
 
 const ProtectedRoute = ({
   component: Component,
@@ -89,6 +92,22 @@ const App = () => {
         <Switch>
           <Layout>
             <ProtectedRoute
+              path="/dashboard/restaurant-modify"
+              exact
+              component={RestaurantCreate}
+              checkCondition={
+                profile.isAuthenticated && profile.user.role === 'restaurant'
+              }
+            />
+            <ProtectedRoute
+              path="/dashboard/restaurant-create"
+              exact
+              component={RestaurantCreate}
+              checkCondition={
+                profile.isAuthenticated && profile.user.role === 'restaurant'
+              }
+            />
+            <ProtectedRoute
               path="/dashboard"
               exact
               component={Dashboard}
@@ -97,9 +116,25 @@ const App = () => {
               }
             />
             <ProtectedRoute
-              path="/dashboard/restaurant"
+              path="/dashboard/restaurants"
               exact
               component={Restaurant}
+              checkCondition={
+                profile.isAuthenticated && profile.user.role === 'restaurant'
+              }
+            />
+            <ProtectedRoute
+              path="/dashboard/menus"
+              exact
+              component={Menu}
+              checkCondition={
+                profile.isAuthenticated && profile.user.role === 'restaurant'
+              }
+            />
+            <ProtectedRoute
+              path="/dashboard/dish-categories"
+              exact
+              component={Category}
               checkCondition={
                 profile.isAuthenticated && profile.user.role === 'restaurant'
               }

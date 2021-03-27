@@ -39,4 +39,9 @@ Route::get('addresses/delivery-address', 'AddressesController@deliveryAddress');
 Route::post('addresses/change-default-address', 'AddressesController@changeDefaultAddress');
 
 Route::resource('addresses', 'AddressesController')->only(['index', 'store', 'update', 'destroy', 'show']);
-Route::resource('/restaurant', 'RestaurantController')->only(['index']);
+Route::post('restaurants/front-image', 'RestaurantsController@frontImageUpload');
+
+Route::resource('/restaurants', 'RestaurantsController')->only(['index', 'store']);
+
+Route::post('/restaurant-modify', 'RestaurantsController@update');
+Route::resource('/menus', 'MenusController')->only(['index', 'store']);

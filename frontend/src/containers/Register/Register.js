@@ -18,8 +18,6 @@ const Register = () => {
   const search = useLocation().search
   const role = new URLSearchParams(search).get('role')
 
-  console.log(role)
-
   const RegisterHandler = (e) => {
     e.preventDefault()
 
@@ -44,10 +42,14 @@ const Register = () => {
       })
   }
 
-  console.log(recaptcha)
   return (
     <div>
-      <h1 className="mt-5 mb-5 text-center">Register</h1>
+      {role === 'restaurant' ? (
+        <h1 className="mt-5 mb-5 text-center">Restaurant Register</h1>
+      ) : (
+        <h1 className="mt-5 mb-5 text-center">Register</h1>
+      )}
+
       <Form className="col-md-4 mr-auto ml-auto auth-form">
         <Form.Group controlId="formBasicEmail">
           <Form.Label>Email address</Form.Label>
