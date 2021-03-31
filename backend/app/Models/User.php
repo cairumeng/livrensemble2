@@ -107,4 +107,9 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->hasMany(SousCommand::class);
     }
+
+    public function restaurant()
+    {
+        return $this->hasOne(Restaurant::class);
+    }
 }

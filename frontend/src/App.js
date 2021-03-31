@@ -36,7 +36,7 @@ import Dashboard from './containers/Dashboard/Dashboard'
 import Restaurant from './containers/Restaurant/Restaurant'
 import RestaurantCreate from './containers/Restaurant/RestaurantCreate'
 import Menu from './containers/Menu/Menu'
-import Category from './containers/Category/Category'
+import DishCategory from './containers/DishCategory/DishCategory'
 
 const ProtectedRoute = ({
   component: Component,
@@ -134,7 +134,7 @@ const App = () => {
             <ProtectedRoute
               path="/dashboard/dish-categories"
               exact
-              component={Category}
+              component={DishCategory}
               checkCondition={
                 profile.isAuthenticated && profile.user.role === 'restaurant'
               }

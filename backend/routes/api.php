@@ -44,4 +44,6 @@ Route::post('restaurants/front-image', 'RestaurantsController@frontImageUpload')
 Route::resource('/restaurants', 'RestaurantsController')->only(['index', 'store']);
 
 Route::post('/restaurant-modify', 'RestaurantsController@update');
-Route::resource('/menus', 'MenusController')->only(['index', 'store']);
+Route::resource('/dish-categories', 'DishCategoriesController')->only(['index', 'store', 'update', 'destroy']);
+Route::resource('/dishes', 'DishesController')->only(['index', 'store', 'update', 'destroy']);
+Route::post('/dishes/image', 'DishesController@imageUploader');

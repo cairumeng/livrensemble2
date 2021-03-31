@@ -61,7 +61,7 @@ class RestaurantsController extends Controller
             'address' => $request->address,
             'phone_number' => $request->phoneNumber,
             'description' => $request->description,
-            'front_image' => $request->frontImage
+            'front_image' => $request->frontImage ?? env('APP_URL') . '/images/default_restaurant.png'
         ]);
     }
 

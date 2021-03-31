@@ -16,7 +16,7 @@ class CreateDishCategoriesTable extends Migration
         Schema::create('dish_categories', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->foreignId('restaurant_id');
+            $table->foreignId('restaurant_id')->constrained()->onDelete('cascade');;
             $table->timestamps();
         });
     }
