@@ -57,15 +57,12 @@ class DishesController extends Controller
             'price' => 'required',
             'ingredients' => 'max:511',
         ]);
-        return $dish->update([
-            'name' => $request->name,
-            'price' => $request->price,
-            'category_id' => $request->category_id,
-            'spicy_level' => $request->spicy_level,
-            'image' => $request->image,
-            'ingredients' => $request->ingredients,
-            'restaurant_id' => Auth::user()->restaurant->id
-
-        ]);
+        return $dish->update($request->only([
+            'name',
+            'price',
+            'spicy_level',
+            'image',
+            'ingredients'
+        ]));
     }
 }

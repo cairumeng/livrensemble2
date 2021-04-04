@@ -31,7 +31,7 @@ const SidebarData = [
   {
     title: 'Restaurant Command',
     icon: <IoIosPaper />,
-    path: '/dashboard/commands',
+    path: '/dashboard/restaurant-commands',
     className: 'sidebar-text',
   },
 ]

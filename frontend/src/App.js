@@ -37,6 +37,7 @@ import Restaurant from './containers/Restaurant/Restaurant'
 import RestaurantCreate from './containers/Restaurant/RestaurantCreate'
 import Menu from './containers/Menu/Menu'
 import DishCategory from './containers/DishCategory/DishCategory'
+import RestaurantCommands from './containers/RestaurantCommands/RestaurantCommands'
 
 const ProtectedRoute = ({
   component: Component,
@@ -91,6 +92,14 @@ const App = () => {
       <Router>
         <Switch>
           <Layout>
+            <ProtectedRoute
+              path="/dashboard/restaurant-commands"
+              exact
+              component={RestaurantCommands}
+              checkCondition={
+                profile.isAuthenticated && profile.user.role === 'restaurant'
+              }
+            />
             <ProtectedRoute
               path="/dashboard/restaurant-modify"
               exact

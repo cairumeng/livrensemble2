@@ -42,7 +42,7 @@ const Login = () => {
       })
       .catch((err) => {
         setIsLoading(false)
-        setErrors(err.response.data.errors)
+        setErrors(err)
       })
   }
 

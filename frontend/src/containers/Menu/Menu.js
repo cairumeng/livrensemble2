@@ -1,50 +1,62 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { Button, Col, Form, ListGroup, Modal, Row } from 'react-bootstrap'
+import { Button, Form, Modal, Table } from 'react-bootstrap'
 import Loader from '../../components/Loader/Loader'
-import { AiOutlineFileAdd, AiFillDelete, AiFillEdit } from 'react-icons/ai'
+import { AiFillDelete, AiFillEdit } from 'react-icons/ai'
 import DefaultDish from './default-dish.png'
+import Select from 'react-select'
 
 function Menu() {
   const [dishes, setDishes] = useState(null)
   const [categories, setCategories] = useState(null)
-  const [selectedCategory, setSelectedCategory] = useState()
+  const [selectedCategoryOption, setSelectedCategoryOption] = useState({})
   const [selectedDishes, setSelectedDishes] = useState()
-  const [categoryShow, setCategoryShow] = useState(false)
   const [dishFormShow, setDishFormShow] = useState(false)
   const [isLoading, setLoading] = useState(false)
-  const [image, setImage] = useState(DefaultDish)
+  const [image, setImage] = useState()
   const [name, setName] = useState()
   const [price, setPrice] = useState()
   const [spicyLevel, setSpicyLevel] = useState()
   const [ingredients, setIngredients] = useState()
   const [actionType, setActionType] = useState()
   const [editDish, setEditDish] = useState()
+  const handleClose = () => setDishFormShow(false)
+  const handleShow = () => setDishFormShow(true)
 
   useEffect(() => {
     axios.get('/dish-categories').then((response) => {
       setCategories(response.data)
+      if (response.data.length > 0) {
+        setSelectedCategoryOption({
+          value: response.data[0].id,
+          label: response.data[0].name,
+        })
+      }
     })
     axios.get('/dishes').then((response) => setDishes(response.data))
   }, [])
+
+  useEffect(() => {
+    if (!dishes) {
+      return
+    }
+    setSelectedDishes(
+      dishes.filter((dish) => dish.category_id === selectedCategoryOption.value)
+    )
+  }, [selectedCategoryOption.value, dishes?.length])
 
   if (dishes === null || categories === null) {
     return <Loader />
   }
 
-  const selectCategoryHandler = (category) => {
-    setCategoryShow(true)
-    setSelectedCategory(category)
-    setSelectedDishes(dishes.filter((dish) => dish.category_id === category.id))
+  const selectCategoryHandler = (selectedOption) => {
+    setSelectedCategoryOption(selectedOption)
   }
 
   const dishFormHandler = (actionType) => {
     setActionType(actionType)
     handleShow()
   }
-
-  const handleClose = () => setDishFormShow(false)
-  const handleShow = () => setDishFormShow(true)
 
   const imageUploader = (e) => {
     setLoading(true)
@@ -76,31 +88,26 @@ function Menu() {
         ingredients,
         spicy_level: spicyLevel,
         image,
-        category_id: selectedCategory.id,
+        category_id: selectedCategoryOption.value,
       })
       .then((response) => {
-        setSelectedDishes([...selectedDishes, response.data])
+        setDishes([...dishes, response.data])
         setDishFormShow(false)
-        setCategoryShow(true)
+        setDishFormInfo({})
       })
   }
 
   const deleteDishHandler = (id) => {
     axios
       .delete(`/dishes/${id}`)
-      .then((response) =>
-        setSelectedDishes(selectedDishes.filter((dish) => dish.id !== id))
-      )
+      .then(() => setDishes(dishes.filter((dish) => dish.id !== id)))
   }
 
   const showEditModal = (dish) => {
     setEditDish(dish)
-    setName(dish.name)
-    setPrice(dish.price)
-    setIngredients(dish.ingredients)
-    setImage(dish.image)
-    setSpicyLevel(dish.spicy_level)
+
     dishFormHandler('edit')
+    setDishFormInfo(dish)
   }
 
   const editDishHandler = (id) => {
@@ -111,63 +118,99 @@ function Menu() {
         ingredients,
         spicy_level: spicyLevel,
         image,
-        category_id: selectedCategory.id,
       })
-      .then((response) => {
-        setDishFormShow(false)
-        setSelectedDishes(
-          selectedDishes.map((dish) =>
-            dish.id === editDish.id
-              ? { ...dish, name, ingredients, price, spicyLevel, image }
+      .then(() => {
+        const updateDishes = (dishes) =>
+          dishes.map((dish) =>
+            dish.id === id
+              ? {
+                  ...dish,
+                  name,
+                  ingredients,
+                  price,
+                  spicy_level: spicyLevel,
+                  image,
+                }
               : dish
           )
-        )
+
+        setDishFormShow(false)
+        setSelectedDishes(updateDishes(selectedDishes))
+        setDishes(updateDishes(dishes))
+        setDishFormInfo({})
       })
   }
 
+  const setDishFormInfo = (dish) => {
+    setName(dish.name)
+    setPrice(dish.price)
+    setIngredients(dish.ingredients)
+    setImage(dish.image)
+    setSpicyLevel(dish.spicy_level)
+  }
+
   return (
-    <div className="mt-5 ml-5 d-flex">
-      <ListGroup as="ul">
-        {categories.length > 0 &&
-          categories.map((category, i) => (
-            <ListGroup.Item
-              as="li"
-              key={i}
-              className="cursor-pointer"
-              onClick={() => selectCategoryHandler(category)}
-              active={selectedCategory && selectedCategory.id === category.id}
-            >
-              {category.name}
-            </ListGroup.Item>
-          ))}
-      </ListGroup>
-      {categoryShow && (
-        <ListGroup as="ul">
-          {selectedDishes.map((dish, i) => (
-            <ListGroup.Item
-              as="li"
-              key={i}
-              className="cursor-pointer d-flex justify-content-between"
-            >
-              <img src={dish.image} className="dish-image" />
-              <span>{dish.name}</span>
-              <div>
-                <AiFillEdit
-                  className="mr-3 cursor-pointer"
-                  onClick={() => showEditModal(dish)}
-                />
-                <AiFillDelete
-                  className="cursor-pointer"
-                  onClick={() => deleteDishHandler(dish.id)}
-                />
-              </div>
-            </ListGroup.Item>
-          ))}
-          <ListGroup.Item as="li" className="text-center">
-            <AiOutlineFileAdd onClick={() => dishFormHandler('create')} />
-          </ListGroup.Item>
-        </ListGroup>
-      )}
+    <div className="mt-5 ml-5 col-md-8  ml-auto mr-auto">
+      <div className="mb-5 row">
+        <span className="col-md-2">
+          <h5>Category:</h5>
+        </span>
+        <Select
+          className="col-md-10"
+          value={selectedCategoryOption}
+          onChange={(selectedOption) => selectCategoryHandler(selectedOption)}
+          placeholder="Select your dish category "
+          options={categories.map((category) => ({
+            value: category.id,
+            label: category.name,
+          }))}
+        />
+      </div>
+
+      <div className="d-flex justify-content-end mb-3">
+        <Button className="col-md-4" onClick={() => dishFormHandler('create')}>
+          New dish
+        </Button>
+      </div>
+
+      <Table striped bordered hover>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Image</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Spicy level</th>
+            <th>Ingredients</th>
+            <th>operations</th>
+          </tr>
+        </thead>
+        <tbody>
+          {selectedDishes &&
+            selectedDishes.map((dish, i) => (
+              <tr key={i}>
+                <td>{i + 1}</td>
+                <td>
+                  <img src={dish.image} className="dish-image" />
+                </td>
+                <td>{dish.name}</td>
+                <td>{dish.price}</td>
+                <td>{dish.spicy_level}</td>
+                <td>{dish.ingredients}</td>
+                <td>
+                  <AiFillEdit
+                    className="mr-3 cursor-pointer"
+                    onClick={() => showEditModal(dish)}
+                  />
+                  <AiFillDelete
+                    className="cursor-pointer"
+                    onClick={() => deleteDishHandler(dish.id)}
+                  />
+                </td>
+              </tr>
+            ))}
+        </tbody>
+      </Table>
 
       <Modal
         show={dishFormShow}
@@ -183,7 +226,7 @@ function Menu() {
         <Modal.Body>
           <Form>
             <div className="text-center mb-3">
-              <img className="front-image" src={image} />
+              <img className="front-image" src={image || DefaultDish} />
               {isLoading && <div className="text-danger">is loading...</div>}
               <div className="mt-2">
                 <input
