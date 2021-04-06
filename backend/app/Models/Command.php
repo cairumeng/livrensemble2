@@ -25,4 +25,9 @@ class Command extends Model
     {
         return $this->belongsTo(City::class, 'city_id')->select(['id', 'city', 'postal_code']);
     }
+
+    public function sousCommands()
+    {
+        return $this->hasMany(SousCommand::class);
+    }
 }

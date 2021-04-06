@@ -11,8 +11,8 @@ const Sidebar = ({ sidebar, setSidebar }) => (
         <li className="sidebar-toggle mt-5 cursor-pointer">
           <AiOutlineClose onClick={() => setSidebar(!sidebar)} />
         </li>
-        {SidebarData.map((item, index) => (
-          <li className={item.className} key={index}>
+        {SidebarData.map((item) => (
+          <li className={item.className} key={item.title}>
             <Link to={item.path}>
               {item.icon}
               <span>{item.title}</span>

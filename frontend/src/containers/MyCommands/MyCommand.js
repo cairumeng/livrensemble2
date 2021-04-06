@@ -30,7 +30,7 @@ const MyCommand = () => {
         </thead>
         <tbody>
           {sousCommand.sous_command_dishes.map((sous_command_dish, index) => (
-            <tr key={index}>
+            <tr key={sous_command_dish.id}>
               <td>{index + 1}</td>
               <td>{sous_command_dish.dish.name}</td>
               <td>{sous_command_dish.dish_quantity}</td>

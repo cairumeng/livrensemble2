@@ -47,4 +47,6 @@ Route::post('/restaurant-modify', 'RestaurantsController@update');
 Route::resource('/dish-categories', 'DishCategoriesController')->only(['index', 'store', 'update', 'destroy']);
 Route::resource('/dishes', 'DishesController')->only(['index', 'store', 'update', 'destroy']);
 Route::post('/dishes/image', 'DishesController@imageUploader');
-Route::resource('/restaurant/commands', 'RestaurantCommandsController')->only(['index', 'store', 'update', 'destroy']);
+Route::resource('/restaurant/commands', 'RestaurantCommandsController')->only(['index', 'store',  'destroy']);
+Route::get('/restaurant/commands/{id}/sous-commands', 'RestaurantSousCommandsController@index');
+Route::get('/restaurant/sous-commands/{id}', 'RestaurantSousCommandsController@show');

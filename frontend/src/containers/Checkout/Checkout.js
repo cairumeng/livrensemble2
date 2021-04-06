@@ -80,16 +80,14 @@ const Checkout = () => {
       <Table bordered hover size="sm" variant="light" className="mt-5">
         <thead>
           <tr>
-            <th>#</th>
             <th>Dish</th>
             <th>Quantity</th>
             <th>Price</th>
           </tr>
         </thead>
         <tbody>
-          {cartItems.map((cartItem, index) => (
-            <tr key={index}>
-              <td>{index + 1}</td>
+          {cartItems.map((cartItem) => (
+            <tr key={cartItem.id}>
               <td>{cartItem.dish.name}</td>
               <td>{cartItem.dish_quantity}</td>
               <td>{cartItem.dish.price * cartItem.dish_quantity}€</td>

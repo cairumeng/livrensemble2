@@ -1,7 +1,7 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import Loader from '../../components/Loader/Loader'
-import { AiFillDelete } from 'react-icons/ai'
+import { AiFillDelete, AiFillEye } from 'react-icons/ai'
 import { FaFlagCheckered } from 'react-icons/fa'
 import {
   Button,
@@ -15,6 +15,7 @@ import moment from 'moment'
 import Select from 'react-select'
 import Datetime from 'react-datetime'
 import 'react-datetime/css/react-datetime.css'
+import { useHistory } from 'react-router-dom'
 
 const ADDRESS_OPTIONS = [
   { value: 0, label: 'Public place' },
@@ -33,6 +34,7 @@ const RestaurantCommands = () => {
 
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
+  const history = useHistory()
 
   const [selectedAddressOption, setSelectedAddressOption] = useState(
     ADDRESS_OPTIONS[1]
@@ -104,14 +106,13 @@ const RestaurantCommands = () => {
           </tr>
         </thead>
         <tbody>
-          {commands.map((command, i) => (
-            <tr key={i} as="">
+          {commands.map((command) => (
+            <tr key={command.id}>
               <td>
                 {command.id}
                 <div>
                   {command.is_valid === 1 && (
                     <OverlayTrigger
-                      key={command.id}
                       placement="right"
                       overlay={
                         <Tooltip id="tooltip-valid-command">
@@ -144,10 +145,37 @@ const RestaurantCommands = () => {
                 <td>送货上门</td>
               )}
               <td>
-                <AiFillDelete
-                  className="mr-2 cursor-pointer"
-                  onClick={() => deleteCommandHandler(command.id)}
-                />
+                <OverlayTrigger
+                  placement="left"
+                  overlay={
+                    <Tooltip id="tooltip-valid-command">
+                      Check all the sous commands!
+                    </Tooltip>
+                  }
+                >
+                  <AiFillEye
+                    className="mr-2 cursor-pointer"
+                    onClick={() =>
+                      history.push(
+                        `/dashboard/commands/${command.id}/sous-commands`
+                      )
+                    }
+                  />
+                </OverlayTrigger>
+
+                <OverlayTrigger
+                  placement="left"
+                  overlay={
+                    <Tooltip id="tooltip-valid-command">
+                      Delete this command!
+                    </Tooltip>
+                  }
+                >
+                  <AiFillDelete
+                    className="mr-2 cursor-pointer"
+                    onClick={() => deleteCommandHandler(command.id)}
+                  />
+                </OverlayTrigger>
               </td>
             </tr>
           ))}

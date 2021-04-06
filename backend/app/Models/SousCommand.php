@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class SousCommand extends Model
 {
     protected $fillable = [
-        'command_id', 'user_id', 'amount', 'address_id', 'note', 'created_at', 'updated_at'
+        'name', 'command_id', 'user_id', 'amount', 'address_id', 'note', 'created_at', 'updated_at'
     ];
 
     protected $casts = [
@@ -28,5 +28,10 @@ class SousCommand extends Model
     {
 
         return $this->hasMany(SousCommandDish::class);
+    }
+
+    public function address()
+    {
+        return $this->belongsTo(Address::class);
     }
 }

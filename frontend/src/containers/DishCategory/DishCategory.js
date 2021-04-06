@@ -129,9 +129,9 @@ const DishCategory = () => {
           </thead>
           <tbody>
             {categories &&
-              categories.map((category, id) => (
-                <tr key={id}>
-                  <td>{id + 1}</td>
+              categories.map((category, index) => (
+                <tr key={category.id}>
+                  <td>{index + 1}</td>
                   <td>{category.name}</td>
                   <td className="text-center">
                     <AiFillEdit

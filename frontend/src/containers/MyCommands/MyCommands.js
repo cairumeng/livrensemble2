@@ -38,7 +38,7 @@ const MyCommands = () => {
         <tbody>
           {sousCommands.map((sousCommand, index) => (
             <tr
-              key={index}
+              key={sousCommand.id}
               onClick={() => sousCommandShowHandler(sousCommand.id)}
             >
               <td>{index + 1}</td>

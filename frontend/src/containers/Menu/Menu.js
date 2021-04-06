@@ -187,9 +187,9 @@ function Menu() {
         </thead>
         <tbody>
           {selectedDishes &&
-            selectedDishes.map((dish, i) => (
-              <tr key={i}>
-                <td>{i + 1}</td>
+            selectedDishes.map((dish, index) => (
+              <tr key={dish.id}>
+                <td>{index + 1}</td>
                 <td>
                   <img src={dish.image} className="dish-image" />
                 </td>
