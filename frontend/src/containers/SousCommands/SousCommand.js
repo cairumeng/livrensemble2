@@ -1,6 +1,5 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { Table } from 'react-bootstrap'
 import { useParams } from 'react-router'
 import Loader from '../../components/Loader/Loader'
 import './SousCommands.scss'
@@ -22,48 +21,42 @@ const SousCommand = () => {
   }
 
   return (
-    <>
-      <div id="user-info" className="text-right mr-5 mt-5">
-        <img src={sousCommand.user.avatar} className="user-avatar" />
-        <div>{sousCommand.user.email}</div>
-        <div>{sousCommand.address.name}</div>
-        <div>{sousCommand.address.address}</div>
-        <div>{sousCommand.address.phone_number}</div>
-      </div>
-      <div>
-        <Table striped bordered hover className="mt-5">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Dish name</th>
-              <th>Quantity</th>
-              <th>Price(€)</th>
-            </tr>
-          </thead>
-          <tbody>
-            {dishes.map((dish, index) => (
-              <tr key={dish.id}>
-                <td>{index + 1}</td>
-                <td>{dish.dish.name}</td>
-                <td>{dish.dish_quantity}</td>
-                <td>{dish.dish.price * dish.dish_quantity}</td>
-              </tr>
-            ))}
-            <tr>
-              <td></td>
-              <td></td>
-              <td>Total</td>
-              <td>
-                {Object.values(dishes).reduce(
-                  (sum, dish) => sum + dish.dish.price * dish.dish_quantity,
-                  0
-                )}
-              </td>
-            </tr>
-          </tbody>
-        </Table>
-      </div>
-    </>
+    <tr>
+      <td colSpan="7">
+        <div className="d-flex">
+          <div className="col-md-3 text-center">
+            <strong>Dish Id</strong>
+          </div>
+          <div className="col-md-3 text-center">
+            <strong>Dish name</strong>
+          </div>
+          <div className="col-md-3 text-center">
+            <strong>Quantity</strong>
+          </div>
+        </div>
+        <hr></hr>
+        {dishes.map((dish) => (
+          <>
+            <div key={dish.id} className="d-flex mt-3">
+              <div className="col-md-3 text-center">{dish.id}</div>
+              <div className="col-md-3 text-center">{dish.dish.name}</div>
+              <div className="col-md-3 text-center">{dish.dish_quantity}</div>
+            </div>
+            <hr />
+          </>
+        ))}
+        <div className="text-right mr-5">
+          Total:
+          <strong className="ml-3">
+            {Object.values(dishes).reduce(
+              (sum, dish) => sum + dish.dish.price * dish.dish_quantity,
+              0
+            )}{' '}
+            €
+          </strong>
+        </div>
+      </td>
+    </tr>
   )
 }
 

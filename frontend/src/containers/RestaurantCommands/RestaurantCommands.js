@@ -1,7 +1,7 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import Loader from '../../components/Loader/Loader'
-import { AiFillDelete, AiFillEye } from 'react-icons/ai'
+import { AiFillDelete, AiFillEye, AiFillFileExcel } from 'react-icons/ai'
 import { FaFlagCheckered } from 'react-icons/fa'
 import {
   Button,
@@ -83,6 +83,24 @@ const RestaurantCommands = () => {
     })
   }
 
+  const exportCommandHanler = (command) => {
+    axios
+      .get(`/restaurant/commands/${command.id}/export-excel`, {
+        responseType: 'blob',
+      })
+      .then((response) => {
+        var fileURL = window.URL.createObjectURL(new Blob([response.data]))
+        var fileLink = document.createElement('a')
+        fileLink.href = fileURL
+        fileLink.setAttribute(
+          'download',
+          `Command#${command.id}-${command.city.city}.xlsx`
+        )
+        document.body.appendChild(fileLink)
+        fileLink.click()
+      })
+  }
+
   if (!commands || !cities) {
     return <Loader />
   }
@@ -111,7 +129,7 @@ const RestaurantCommands = () => {
               <td>
                 {command.id}
                 <div>
-                  {command.is_valid === 1 && (
+                  {command.current_price >= command.total_price && (
                     <OverlayTrigger
                       placement="right"
                       overlay={
@@ -174,6 +192,20 @@ const RestaurantCommands = () => {
                   <AiFillDelete
                     className="mr-2 cursor-pointer"
                     onClick={() => deleteCommandHandler(command.id)}
+                  />
+                </OverlayTrigger>
+
+                <OverlayTrigger
+                  placement="left"
+                  overlay={
+                    <Tooltip id="tooltip-valid-command">
+                      Download all user commands!
+                    </Tooltip>
+                  }
+                >
+                  <AiFillFileExcel
+                    className="mr-2 cursor-pointer"
+                    onClick={() => exportCommandHanler(command)}
                   />
                 </OverlayTrigger>
               </td>

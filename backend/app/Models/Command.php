@@ -10,11 +10,16 @@ class Command extends Model
         'restaurant_id', 'current_price', 'total_price', 'start_time', 'city_id', 'delivery_time', 'closed_time', 'is_valid', 'delivery_option', 'address'
     ];
 
+    protected $dates = [
+        'delivery_time', 'closed_time', 'start_time'
+    ];
+
     protected $casts = [
         'delivery_option' => 'integer',
         'total_price' => 'float',
         'current_price' => 'float'
     ];
+
 
     public function restaurant()
     {

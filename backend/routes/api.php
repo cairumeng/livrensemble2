@@ -50,3 +50,4 @@ Route::post('/dishes/image', 'DishesController@imageUploader');
 Route::resource('/restaurant/commands', 'RestaurantCommandsController')->only(['index', 'store',  'destroy']);
 Route::get('/restaurant/commands/{id}/sous-commands', 'RestaurantSousCommandsController@index');
 Route::get('/restaurant/sous-commands/{id}', 'RestaurantSousCommandsController@show');
+Route::get('/restaurant/commands/{id}/export-excel', 'RestaurantCommandsController@exportExcel');

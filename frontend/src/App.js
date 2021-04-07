@@ -95,14 +95,6 @@ const App = () => {
         <Switch>
           <Layout>
             <ProtectedRoute
-              path="/dashboard/sous-commands/:id"
-              exact
-              component={SousCommand}
-              checkCondition={
-                profile.isAuthenticated && profile.user.role === 'restaurant'
-              }
-            />
-            <ProtectedRoute
               path="/dashboard/commands/:id/sous-commands"
               exact
               component={SousCommands}
