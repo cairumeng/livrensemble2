@@ -14,7 +14,7 @@ class RestaurantCommandsController extends Controller
     public function index()
     {
         $restaurant_id = Auth::user()->restaurant->id;
-        return Command::with('city')->where('restaurant_id', $restaurant_id)->whereIn('is_valid', [0, 1])->get();
+        return Command::with('city')->where('restaurant_id', $restaurant_id)->whereIn('status', [Command::STATUS_GROUPING, Command::STATUS_CONFIRMED])->get();
     }
 
     public function store(Request $request)
@@ -40,7 +40,7 @@ class RestaurantCommandsController extends Controller
             'delivery_time' => $request->delivery_time,
             'delivery_option' => $request->delivery_option,
             'address' => $request->address,
-            'is_valid' => 1
+            'status' => Command::STATUS_GROUPING,
         ]);
         return $command->load('city');
     }
@@ -58,5 +58,10 @@ class RestaurantCommandsController extends Controller
         $sousCommands = SousCommand::with('address', 'sousCommandDishes.dish')->where('command_id', $commandId)->get();
         $FileName = $command->restaurant->name . '-#' . $command->id . '-' . time() . '.xlsx';
         return Excel::download(new CommandDetailExport($command, $sousCommands), $FileName);
+    }
+
+    public function update(Command $command, Request $request)
+    {
+        return $command->update(['status' => $request->status]);
     }
 }

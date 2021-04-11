@@ -26,7 +26,7 @@ $factory->define(Command::class, function (Faker $faker) {
         'closed_time' => $closed_time,
         'delivery_time' => $delivery_time,
         'address' => $delivery_option == 0 ? $faker->randomElement($addressess) : null,
-        'is_valid' => 0,
+        'status' => 0,
         //0=grouping 1=confirmed 2= cancelled 3=delivered
     ];
 });

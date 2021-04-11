@@ -6,8 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Command extends Model
 {
+    const STATUS_GROUPING = 0;
+    const STATUS_CONFIRMED = 1;
+    const STATUS_CANCEL = 2;
+    const STATUS_DELIVERED = 3;
+
     protected $fillable = [
-        'restaurant_id', 'current_price', 'total_price', 'start_time', 'city_id', 'delivery_time', 'closed_time', 'is_valid', 'delivery_option', 'address'
+        'restaurant_id', 'current_price', 'total_price', 'start_time', 'city_id', 'delivery_time', 'closed_time', 'status', 'delivery_option', 'address'
     ];
 
     protected $dates = [
@@ -19,7 +24,6 @@ class Command extends Model
         'total_price' => 'float',
         'current_price' => 'float'
     ];
-
 
     public function restaurant()
     {

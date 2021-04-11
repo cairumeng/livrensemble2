@@ -21,6 +21,13 @@ const ADDRESS_OPTIONS = [
   { value: 0, label: 'Public place' },
   { value: 1, label: 'Delivery home' },
 ]
+
+const CommandStatus = {
+  GROUPING: 0,
+  CONFIRMED: 1,
+  CANCEL: 2,
+  DELIVERED: 3,
+}
 const RestaurantCommands = () => {
   const [commands, setCommands] = useState(null)
   const [show, setShow] = useState(false)
@@ -101,6 +108,27 @@ const RestaurantCommands = () => {
       })
   }
 
+  const setStatusHandler = (id, status) => {
+    console.log(status, id)
+    axios.put(`/restaurant/commands/${id}`, { status }).then(() => {
+      if (
+        status === CommandStatus.CANCEL ||
+        status === CommandStatus.DELIVERED
+      ) {
+        setCommands(commands.filter((command) => command.id !== id))
+      } else {
+        setCommands(
+          commands.map((command) => {
+            if (command.id == id) {
+              return { ...command, status }
+            }
+            return command
+          })
+        )
+      }
+    })
+  }
+
   if (!commands || !cities) {
     return <Loader />
   }
@@ -114,12 +142,12 @@ const RestaurantCommands = () => {
           <tr>
             <th># </th>
             <th>City</th>
-            <th>Delivery Price(€)</th>
-            <th>Current Price(€)</th>
+            <th>Current Price/Delivery Price(€)</th>
             <th>Start time</th>
             <th>Closed time</th>
             <th>Delivery time</th>
             <th>Delivery address</th>
+            <th>Status</th>
             <th>Operations</th>
           </tr>
         </thead>
@@ -144,8 +172,9 @@ const RestaurantCommands = () => {
                 </div>
               </td>
               <td>{command.city.city}</td>
-              <td>{command.total_price}</td>
-              <td>{command.current_price}</td>
+              <td>
+                {command.current_price} / {command.total_price}
+              </td>
               <td>
                 {moment(command.start_time).format('MMMM Do YYYY, h:mm:ss a')}
               </td>
@@ -162,6 +191,46 @@ const RestaurantCommands = () => {
               ) : (
                 <td>送货上门</td>
               )}
+              {command.status === 0 ? (
+                <td>
+                  Grouping
+                  <div>
+                    <Button
+                      size="sm"
+                      className="mt-3"
+                      onClick={() =>
+                        setStatusHandler(command.id, CommandStatus.CONFIRMED)
+                      }
+                    >
+                      Confirm
+                    </Button>{' '}
+                    <Button
+                      size="sm"
+                      variant="light"
+                      className="mt-3"
+                      onClick={() =>
+                        setStatusHandler(command.id, CommandStatus.CANCEL)
+                      }
+                    >
+                      Cancel{' '}
+                    </Button>
+                  </div>
+                </td>
+              ) : (
+                <td>
+                  Confirmed{' '}
+                  <Button
+                    size="sm"
+                    className="mt-3"
+                    onClick={() =>
+                      setStatusHandler(command.id, CommandStatus.DELIVERED)
+                    }
+                  >
+                    Delivered
+                  </Button>
+                </td>
+              )}
+
               <td>
                 <OverlayTrigger
                   placement="left"
@@ -213,6 +282,7 @@ const RestaurantCommands = () => {
           ))}
         </tbody>
       </Table>
+
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Create a new command</Modal.Title>
