@@ -37,7 +37,7 @@ import Restaurant from './containers/Restaurant/Restaurant'
 import RestaurantCreate from './containers/Restaurant/RestaurantCreate'
 import Menu from './containers/Menu/Menu'
 import DishCategory from './containers/DishCategory/DishCategory'
-import RestaurantCommands from './containers/RestaurantCommands/RestaurantCommands'
+import RestaurantNewCommands from './containers/RestaurantNewCommands/RestaurantNewCommands'
 import SousCommands from './containers/SousCommands/SousCommands'
 import SousCommand from './containers/SousCommands/SousCommand'
 
@@ -103,9 +103,9 @@ const App = () => {
               }
             />
             <ProtectedRoute
-              path="/dashboard/restaurant-commands"
+              path="/dashboard/restaurant-new-commands"
               exact
-              component={RestaurantCommands}
+              component={RestaurantNewCommands}
               checkCondition={
                 profile.isAuthenticated && profile.user.role === 'restaurant'
               }

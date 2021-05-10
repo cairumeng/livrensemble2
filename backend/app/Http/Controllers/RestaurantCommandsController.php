@@ -14,8 +14,22 @@ class RestaurantCommandsController extends Controller
     public function index()
     {
         $restaurant_id = Auth::user()->restaurant->id;
+        return Command::with('city')->where('restaurant_id', $restaurant_id)->orderBy('id')->get();
+    }
+
+    public function newCommands()
+    {
+        $restaurant_id = Auth::user()->restaurant->id;
         return Command::with('city')->where('restaurant_id', $restaurant_id)->whereIn('status', [Command::STATUS_GROUPING, Command::STATUS_CONFIRMED])->get();
     }
+
+    public function pastCommands()
+    {
+        $restaurant_id = Auth::user()->restaurant->id;
+        return Command::with('city')->where('restaurant_id', $restaurant_id)->whereIn('status', [Command::STATUS_DELIVERED, Command::STATUS_CANCEL])->get();
+    }
+
+
 
     public function store(Request $request)
     {

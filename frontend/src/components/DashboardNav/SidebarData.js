@@ -1,5 +1,5 @@
-import { AiFillHome, AiOutlineTags } from 'react-icons/ai'
-import { MdRestaurantMenu } from 'react-icons/md'
+import { AiFillHome, AiOutlineTags, AiOutlineFileDone } from 'react-icons/ai'
+import { MdRestaurantMenu, MdFiberNew } from 'react-icons/md'
 import { IoIosPaper } from 'react-icons/io'
 import { FaStore } from 'react-icons/fa'
 
@@ -23,13 +23,26 @@ const SidebarData = [
     className: 'sidebar-text',
   },
   {
-    title: 'Restaurant Menu',
+    title: 'Menu',
     icon: <MdRestaurantMenu />,
     path: '/dashboard/menus',
     className: 'sidebar-text',
   },
   {
-    title: 'Restaurant Command',
+    title: 'Commands to deal',
+    icon: <MdFiberNew />,
+    path: '/dashboard/restaurant-new-commands',
+    className: 'sidebar-text',
+  },
+  {
+    title: 'Past commands',
+    icon: <AiOutlineFileDone />,
+    path: '/dashboard/restaurant-old-commands',
+    className: 'sidebar-text',
+  },
+
+  {
+    title: 'All commands',
     icon: <IoIosPaper />,
     path: '/dashboard/restaurant-commands',
     className: 'sidebar-text',

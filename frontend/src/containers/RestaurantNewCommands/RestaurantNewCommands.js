@@ -28,7 +28,7 @@ const CommandStatus = {
   CANCEL: 2,
   DELIVERED: 3,
 }
-const RestaurantCommands = () => {
+const RestaurantNewCommands = () => {
   const [commands, setCommands] = useState(null)
   const [show, setShow] = useState(false)
   const [cities, setCities] = useState(null)
@@ -49,7 +49,7 @@ const RestaurantCommands = () => {
 
   useEffect(() => {
     axios
-      .get('/restaurant/commands')
+      .get('/restaurant/new-commands')
       .then((response) => setCommands(response.data))
 
     axios.get('/cities').then((response) => {
@@ -365,4 +365,4 @@ const RestaurantCommands = () => {
   )
 }
 
-export default RestaurantCommands
+export default RestaurantNewCommands
